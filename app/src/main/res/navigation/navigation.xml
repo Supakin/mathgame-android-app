@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="buu.supakin.mathgameverviewmodel.MainFragment"
+        android:label="@string/menu_home">
+        <action
+            android:id="@+id/action_mainFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="scoreCorrect"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="scoreInCorrect"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="buu.supakin.mathgameverviewmodel.MenuFragment"
+        android:label="@string/menu_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_playFragment"
+            app:destination="@id/playFragment"
+            app:popUpTo="@id/menuFragment" />
+        <argument
+            android:name="scoreCorrect"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="scoreInCorrect"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_menuFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playFragment"
+        android:name="buu.supakin.mathgameverviewmodel.PlayFragment"
+        android:label="@string/menu_play">
+        <action
+            android:id="@+id/action_playFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/playFragment" />
+        <argument
+            android:name="scoreCorrect"
+            app:argType="integer" />
+        <argument
+            android:name="scoreInCorrect"
+            app:argType="integer" />
+        <argument
+            android:name="menu"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_playFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="buu.supakin.mathgameverviewmodel.ResultFragment"
+        android:label="@string/menu_result">
+        <action
+            android:id="@+id/action_resultFragment_to_playFragment"
+            app:destination="@id/playFragment" />
+        <argument
+            android:name="scoreCorrect"
+            app:argType="integer" />
+        <argument
+            android:name="scoreInCorrect"
+            app:argType="integer" />
+        <argument
+            android:name="menu"
+            app:argType="integer" />
+        <argument
+            android:name="result"
+            app:argType="boolean" />
+    </fragment>
+</navigation>
