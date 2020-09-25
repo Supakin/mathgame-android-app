@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import buu.supakin.mathgameverviewmodel.MenuFragmentArgs
 import buu.supakin.mathgameverviewmodel.PlayFragmentArgs
 import buu.supakin.mathgameverviewmodel.PlayFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
+import buu.supakin.mathgameverviewmodel.models.GameViewModel
 import kotlin.random.Random
 
 class PlayFragment : Fragment() {
@@ -24,7 +27,7 @@ class PlayFragment : Fragment() {
     private var result = false
 
     private lateinit var binding: FragmentPlayBinding
-
+    private lateinit var gameViewModel: GameViewModel
 
 
     override fun onCreateView(
@@ -34,9 +37,15 @@ class PlayFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_play, container, false)
 
-        menu = PlayFragmentArgs.fromBundle(requireArguments()).menu
-        scoreCorrect = PlayFragmentArgs.fromBundle(requireArguments()).scoreCorrect
-        scoreInCorrect = PlayFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        gameViewModel = GameViewModel(
+            MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+            MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect,
+            PlayFragmentArgs.fromBundle(requireArguments()).menu
+        )
+
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        binding.gameViewModel = gameViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.apply{
             btnArray = arrayListOf(
@@ -46,7 +55,7 @@ class PlayFragment : Fragment() {
                 btnAnswer4
             )
         }
-        this.play()
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 PlayFragmentDirections.actionPlayFragmentToMenuFragment(
@@ -56,7 +65,7 @@ class PlayFragment : Fragment() {
             )
         }
 
-
+        this.play()
 
         return binding.root
     }
