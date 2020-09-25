@@ -7,75 +7,78 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.MenuFragmentArgs
 import buu.supakin.mathgameverviewmodel.MenuFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
+import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMenuBinding
-
+import buu.supakin.mathgameverviewmodel.models.GameViewModel
 
 
 class MenuFragment : Fragment() {
-    private var scoreCorrect = 0
-    private var scoreInCorrect = 0
-    private var menu = 0
+    private lateinit var binding: FragmentMenuBinding
+    private lateinit var gameViewModel: GameViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentMenuBinding>(inflater,
+        binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_menu, container, false)
 
-        scoreCorrect = MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect
-        scoreInCorrect = MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        gameViewModel = GameViewModel(
+            MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+            MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        )
+
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        binding.gameViewModel = gameViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.apply {
 
-            txtScoreCorrect.text = scoreCorrect.toString()
-            txtScoreInCorrect.text = scoreInCorrect.toString()
+            txtScoreCorrect.text = gameViewModel.correctScore.value.toString()
+            txtScoreInCorrect.text = gameViewModel.inCorrectScore.value.toString()
 
             btnPlusMode.setOnClickListener {
-                menu = 1
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        scoreCorrect,
-                        scoreInCorrect,
-                        menu
+                        gameViewModel.correctScore.value?:0,
+                        gameViewModel.inCorrectScore.value?:0,
+                        1
                     )
                 )
             }
 
             btnMinusMode.setOnClickListener {
-                menu = 2
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        scoreCorrect,
-                        scoreInCorrect,
-                        menu
+                        gameViewModel.correctScore.value?:0,
+                        gameViewModel.inCorrectScore.value?:0,
+                        2
                     )
                 )
             }
 
             btnMultipliedMode.setOnClickListener {
-                menu = 3
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        scoreCorrect,
-                        scoreInCorrect,
-                        menu
+                        gameViewModel.correctScore.value?:0,
+                        gameViewModel.inCorrectScore.value?:0,
+                        3
                     )
                 )
             }
 
             btnDivideMode.setOnClickListener {
-                menu = 4
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        scoreCorrect,
-                        scoreInCorrect,
-                        menu
+                        gameViewModel.correctScore.value?:0,
+                        gameViewModel.inCorrectScore.value?:0,
+                        4
                     )
                 )
             }
@@ -87,8 +90,8 @@ class MenuFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 MenuFragmentDirections.actionMenuFragmentToMainFragment(
-                    scoreCorrect,
-                    scoreInCorrect
+                    gameViewModel.correctScore.value?:0,
+                    gameViewModel.inCorrectScore.value?:0
                 )
             )
         }
