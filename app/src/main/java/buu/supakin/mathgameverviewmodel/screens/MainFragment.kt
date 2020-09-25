@@ -36,19 +36,17 @@ class MainFragment : Fragment() {
         )
 
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-
-
-        binding.btnPlay.setOnClickListener {
-//            view?.findNavController()?.navigate(
-////                MainFragmentDirections.actionMainFragmentToMenuFragment(
-////                    scoreCorrect,
-////                    scoreInCorrect
-////                )
-////            )
-        }
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.btnPlay.setOnClickListener {
+            view?.findNavController()?.navigate(
+                MainFragmentDirections.actionMainFragmentToMenuFragment(
+                    gameViewModel.correctScore.value?:0,
+                    gameViewModel.inCorrectScore.value?:0
+                )
+            )
+        }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             exitProcess(0)
         }
