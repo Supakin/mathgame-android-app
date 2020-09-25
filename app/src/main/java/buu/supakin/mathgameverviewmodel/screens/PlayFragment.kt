@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel
+package buu.supakin.mathgameverviewmodel.screens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,9 @@ import android.widget.Button
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import buu.supakin.mathgameverviewmodel.PlayFragmentArgs
+import buu.supakin.mathgameverviewmodel.PlayFragmentDirections
+import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
 import kotlin.random.Random
 
@@ -45,7 +48,12 @@ class PlayFragment : Fragment() {
         }
         this.play()
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            view?.findNavController()?.navigate(PlayFragmentDirections.actionPlayFragmentToMenuFragment(scoreCorrect, scoreInCorrect))
+            view?.findNavController()?.navigate(
+                PlayFragmentDirections.actionPlayFragmentToMenuFragment(
+                    scoreCorrect,
+                    scoreInCorrect
+                )
+            )
         }
 
 

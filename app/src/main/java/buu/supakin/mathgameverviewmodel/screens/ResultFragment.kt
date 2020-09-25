@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel
+package buu.supakin.mathgameverviewmodel.screens
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import buu.supakin.mathgameverviewmodel.R
+import buu.supakin.mathgameverviewmodel.ResultFragmentArgs
+import buu.supakin.mathgameverviewmodel.ResultFragmentDirections
 import buu.supakin.mathgameverviewmodel.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
@@ -31,7 +34,13 @@ class ResultFragment : Fragment() {
         result = ResultFragmentArgs.fromBundle(requireArguments()).result
         this.init()
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            view?.findNavController()?.navigate(ResultFragmentDirections.actionResultFragmentToPlayFragment(scoreCorrect, scoreInCorrect, menu))
+            view?.findNavController()?.navigate(
+                ResultFragmentDirections.actionResultFragmentToPlayFragment(
+                    scoreCorrect,
+                    scoreInCorrect,
+                    menu
+                )
+            )
         }
         return binding.root
     }
@@ -39,13 +48,21 @@ class ResultFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     private fun init() {
         binding.apply {
-            clResult.setBackgroundColor(if (result) resources.getColor(R.color.colorSuccess)  else resources.getColor(R.color.colorDanger))
+            clResult.setBackgroundColor(if (result) resources.getColor(R.color.colorSuccess)  else resources.getColor(
+                R.color.colorDanger
+            ))
             btnNext.setBackgroundResource(if (result) R.drawable.btn_rounded_success else R.drawable.btn_rounded_danger)
             txtSummaryScore.text = getSummaryScore(if (result) scoreCorrect else scoreInCorrect)
             imgResult.setImageResource(if (result) R.drawable.correct else R.drawable.incorrect)
 
             btnNext.setOnClickListener {
-                view?.findNavController()?.navigate(ResultFragmentDirections.actionResultFragmentToPlayFragment(scoreCorrect, scoreInCorrect, menu))
+                view?.findNavController()?.navigate(
+                    ResultFragmentDirections.actionResultFragmentToPlayFragment(
+                        scoreCorrect,
+                        scoreInCorrect,
+                        menu
+                    )
+                )
             }
         }
 
