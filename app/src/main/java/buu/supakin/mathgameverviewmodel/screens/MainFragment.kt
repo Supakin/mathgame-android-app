@@ -7,17 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.MainFragmentArgs
 import buu.supakin.mathgameverviewmodel.MainFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
+import buu.supakin.mathgameverviewmodel.models.GameViewModel
 import kotlin.system.exitProcess
 
 class MainFragment : Fragment() {
 
-    private var scoreCorrect = 0
-    private var scoreInCorrect = 0
+    private lateinit var binding: FragmentMainBinding
+    private lateinit var gameViewModel: GameViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,19 +27,27 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val binding = DataBindingUtil.inflate<FragmentMainBinding>(inflater,
+        binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_main, container, false)
-        scoreCorrect = MainFragmentArgs.fromBundle(requireArguments()).scoreCorrect
-        scoreInCorrect = MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+
+        gameViewModel = GameViewModel(
+            MainFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+            MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        )
+
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
 
         binding.btnPlay.setOnClickListener {
-            view?.findNavController()?.navigate(
-                MainFragmentDirections.actionMainFragmentToMenuFragment(
-                    scoreCorrect,
-                    scoreInCorrect
-                )
-            )
-        } 
+//            view?.findNavController()?.navigate(
+////                MainFragmentDirections.actionMainFragmentToMenuFragment(
+////                    scoreCorrect,
+////                    scoreInCorrect
+////                )
+////            )
+        }
+        binding.gameViewModel = gameViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             exitProcess(0)
