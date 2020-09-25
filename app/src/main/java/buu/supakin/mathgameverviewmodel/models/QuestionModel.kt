@@ -1,16 +1,15 @@
 package buu.supakin.mathgameverviewmodel.models
 
-import buu.supakin.mathgameverviewmodel.R
 import kotlin.random.Random
 
 class QuestionModel (menu: Int) {
     var menu = 0
-    var realAnswer = 0
+    private var realAnswer = 0
     var num1 = 0
     var num2 = 0
     var operator = ""
     var guideline = ""
-    lateinit var answerArray: ArrayList<Int>
+    var answerArray: ArrayList<Int>
 
     init {
         this.menu = menu
@@ -20,7 +19,6 @@ class QuestionModel (menu: Int) {
         this.answerArray = this.initAnswerArray()
         this.operator = this.initOperator()
         this.guideline = this.initGuideLine()
-
     }
 
     private fun initNum1 () : Int {

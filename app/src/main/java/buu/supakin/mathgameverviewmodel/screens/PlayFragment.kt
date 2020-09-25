@@ -16,18 +16,15 @@ import buu.supakin.mathgameverviewmodel.PlayFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
 import buu.supakin.mathgameverviewmodel.models.GameViewModel
+import buu.supakin.mathgameverviewmodel.models.QuestionModel
 import kotlin.random.Random
 
 class PlayFragment : Fragment() {
     private var realAnswer = 0
     private var btnArray = arrayListOf<Button>()
-    private var menu = 0
-    private var scoreCorrect = 0
-    private var scoreInCorrect = 0
-    private var result = false
-
     private lateinit var binding: FragmentPlayBinding
     private lateinit var gameViewModel: GameViewModel
+    private lateinit var questionModel: QuestionModel
 
 
     override fun onCreateView(
@@ -38,12 +35,13 @@ class PlayFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_play, container, false)
 
         gameViewModel = GameViewModel(
-            MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-            MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect,
+            PlayFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+            PlayFragmentArgs.fromBundle(requireArguments()).scoreInCorrect,
             PlayFragmentArgs.fromBundle(requireArguments()).menu
         )
 
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        questionModel = QuestionModel(gameViewModel.menu.value?:0)
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -59,8 +57,8 @@ class PlayFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 PlayFragmentDirections.actionPlayFragmentToMenuFragment(
-                    scoreCorrect,
-                    scoreInCorrect
+                    gameViewModel.correctScore.value?:0,
+                    gameViewModel.inCorrectScore.value?:0,
                 )
             )
         }
@@ -71,112 +69,54 @@ class PlayFragment : Fragment() {
     }
 
     private fun play() {
-        realAnswer = setQuestionAndAnswer()
-        this.setGuideLine()
-        this.setButtonAction()
+        this.setAllText()
+        this.setAllButton()
     }
 
-    private fun setQuestionAndAnswer(): Int {
-        var num1 = Random.nextInt(0, 10)
-        var num2 = 0
-        if (menu == 4) {
-            while (true) {
-                val tempDummy = Random.nextInt(1, 10)
-                if (num1 % tempDummy == 0) {
-                    num2 = tempDummy
-                    break
-                }
-            }
-
-        } else {
-            num2 = Random.nextInt(0, 10)
-        }
-        val answer = when (menu) {
-            1 -> num1 + num2
-            2 -> num1 - num2
-            3 -> num1 * num2
-            else -> num1 / num2
-        }
-        this.setTextQuestion(num1, num2)
-        this.setTextAnswer(answer)
-        return answer
-    }
-
-    private fun setTextQuestion(number1: Int, number2: Int) {
+    private fun setAllText () {
         binding.apply {
-            txtNumber1.text = number1.toString()
-            txtNumber2.text = number2.toString()
-            when (menu) {
-                1 -> txtOperator.text = getString(R.string.operator_plus)
-                2 -> txtOperator.text = getString(R.string.operator_minus)
-                3 -> txtOperator.text = getString(R.string.operator_multiplied)
-                else -> txtOperator.text = getString(R.string.operator_divide)
-            }
+            txtNumber1.text = questionModel.num1.toString()
+            txtNumber2.text = questionModel.num2.toString()
+            txtOperator.text = questionModel.operator
+            txtGuideLine.text = questionModel.guideline
         }
-
     }
 
-    private fun setTextAnswer(answer: Int) {
-        val answerIndex = Random.nextInt(0, 3)
-        val answerArray = arrayListOf<Int>()
-        answerArray.add(answer)
+    private fun setAllButton () {
+        binding.apply{
+            btnArray = arrayListOf(
+                btnAnswer1,
+                btnAnswer2,
+                btnAnswer3,
+                btnAnswer4
+            )
+        }
         for ((index, btn) in btnArray.withIndex()) {
-            if (answerIndex == index) {
-                btn.text = answer.toString()
-            } else {
-                val anotherAnswer = this.getAnotherAnswer(answerArray)
-                answerArray.add(anotherAnswer)
-                btn.text = anotherAnswer.toString()
-            }
+            btn.text = questionModel.answerArray[index].toString()
+            btn.setOnClickListener { this.getResult(btn.text.toString().toInt()) }
         }
     }
 
-    private fun getAnotherAnswer(answerArray: ArrayList<Int>): Int {
-        while (true) {
-            val anotherAnswer = when (menu) {
-                1 -> Random.nextInt(0, 20)
-                2 -> Random.nextInt(-10, 10)
-                3 -> Random.nextInt(0, 100)
-                else -> Random.nextInt(0, 10)
-            }
-            if (!answerArray.contains(anotherAnswer)) return anotherAnswer
-            else continue
-        }
-    }
+
 
     private fun getResult(answer: Int)  {
-        result = if (answer == realAnswer) {
-            scoreCorrect++
+        val result = if (questionModel.getResult(answer)) {
+            gameViewModel.onCorrect()
             true
         } else {
-            scoreInCorrect++
+            gameViewModel.onInCorrect()
             false
         }
 
         view?.findNavController()?.navigate(
             PlayFragmentDirections.actionPlayFragmentToResultFragment(
-                scoreCorrect,
-                scoreInCorrect,
-                menu,
+                gameViewModel.correctScore.value?:0,
+                gameViewModel.inCorrectScore.value?:0,
+                questionModel.menu,
                 result
             )
         )
     }
 
-    private fun setButtonAction() {
-        for (btn in btnArray) btn.setOnClickListener { this.getResult(btn.text.toString().toInt()) }
-    }
-
-    private fun setGuideLine() {
-        binding.apply {
-            txtGuideLine.text = when (menu) {
-                1 -> getString(R.string.caption_play_plus)
-                2 -> getString(R.string.caption_play_minus)
-                3 -> getString(R.string.caption_play_multiplied)
-                else -> getString(R.string.caption_play_divide)
-            }
-        }
-
-    }
 
 }
