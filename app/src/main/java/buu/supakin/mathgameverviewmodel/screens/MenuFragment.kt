@@ -9,8 +9,6 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import buu.supakin.mathgameverviewmodel.MenuFragmentArgs
-import buu.supakin.mathgameverviewmodel.MenuFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMenuBinding
@@ -40,14 +38,14 @@ class MenuFragment : Fragment() {
 
         binding.apply {
 
-            txtScoreCorrect.text = gameViewModel.correctScore.value.toString()
-            txtScoreInCorrect.text = gameViewModel.inCorrectScore.value.toString()
+            txtScoreCorrect.text = gameViewModel!!.correctScore.value.toString()
+            txtScoreInCorrect.text = gameViewModel!!.inCorrectScore.value.toString()
 
             btnPlusMode.setOnClickListener {
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel.correctScore.value?:0,
-                        gameViewModel.inCorrectScore.value?:0,
+                        gameViewModel!!.correctScore.value?:0,
+                        gameViewModel!!.inCorrectScore.value?:0,
                         1
                     )
                 )
@@ -56,8 +54,8 @@ class MenuFragment : Fragment() {
             btnMinusMode.setOnClickListener {
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel.correctScore.value?:0,
-                        gameViewModel.inCorrectScore.value?:0,
+                        gameViewModel!!.correctScore.value?:0,
+                        gameViewModel!!.inCorrectScore.value?:0,
                         2
                     )
                 )
@@ -66,8 +64,8 @@ class MenuFragment : Fragment() {
             btnMultipliedMode.setOnClickListener {
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel.correctScore.value?:0,
-                        gameViewModel.inCorrectScore.value?:0,
+                        gameViewModel!!.correctScore.value?:0,
+                        gameViewModel!!.inCorrectScore.value?:0,
                         3
                     )
                 )
@@ -76,22 +74,20 @@ class MenuFragment : Fragment() {
             btnDivideMode.setOnClickListener {
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel.correctScore.value?:0,
-                        gameViewModel.inCorrectScore.value?:0,
+                        gameViewModel!!.correctScore.value?:0,
+                        gameViewModel!!.inCorrectScore.value?:0,
                         4
                     )
                 )
             }
-
-
 
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 MenuFragmentDirections.actionMenuFragmentToMainFragment(
-                    gameViewModel.correctScore.value?:0,
-                    gameViewModel.inCorrectScore.value?:0
+                    gameViewModel!!.correctScore.value?:0,
+                    gameViewModel!!.inCorrectScore.value?:0
                 )
             )
         }

@@ -9,8 +9,6 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import buu.supakin.mathgameverviewmodel.MainFragmentArgs
-import buu.supakin.mathgameverviewmodel.MainFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
 import buu.supakin.mathgameverviewmodel.models.GameViewModel

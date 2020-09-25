@@ -10,14 +10,11 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import buu.supakin.mathgameverviewmodel.MenuFragmentArgs
-import buu.supakin.mathgameverviewmodel.PlayFragmentArgs
-import buu.supakin.mathgameverviewmodel.PlayFragmentDirections
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
 import buu.supakin.mathgameverviewmodel.models.GameViewModel
 import buu.supakin.mathgameverviewmodel.models.QuestionModel
-import kotlin.random.Random
+
 
 class PlayFragment : Fragment() {
     private var realAnswer = 0

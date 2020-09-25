@@ -11,8 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
-import buu.supakin.mathgameverviewmodel.ResultFragmentArgs
-import buu.supakin.mathgameverviewmodel.ResultFragmentDirections
 import buu.supakin.mathgameverviewmodel.databinding.FragmentResultBinding
 import buu.supakin.mathgameverviewmodel.models.GameViewModel
 
@@ -41,9 +39,9 @@ class ResultFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 ResultFragmentDirections.actionResultFragmentToPlayFragment(
-                    gameViewModel.correctScore.value?:0,
-                    gameViewModel.inCorrectScore.value?:0,
-                    gameViewModel.menu.value?:0
+                    gameViewModel!!.correctScore.value?:0,
+                    gameViewModel!!.inCorrectScore.value?:0,
+                    gameViewModel!!.menu.value?:0
                 )
             )
         }
@@ -55,19 +53,19 @@ class ResultFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     private fun init() {
         binding.apply {
-            clResult.setBackgroundColor(if (gameViewModel.result.value != false) resources.getColor(R.color.colorSuccess)  else resources.getColor(
+            clResult.setBackgroundColor(if (gameViewModel!!.result.value != false) resources.getColor(R.color.colorSuccess)  else resources.getColor(
                 R.color.colorDanger
             ))
-            btnNext.setBackgroundResource(if (gameViewModel.result.value != false) R.drawable.btn_rounded_success else R.drawable.btn_rounded_danger)
-            txtSummaryScore.text = getSummaryScore(if (gameViewModel.result.value != false) gameViewModel.correctScore.value?:0 else gameViewModel.inCorrectScore.value?:0)
-            imgResult.setImageResource(if (gameViewModel.result.value != false) R.drawable.correct else R.drawable.incorrect)
+            btnNext.setBackgroundResource(if (gameViewModel!!.result.value != false) R.drawable.btn_rounded_success else R.drawable.btn_rounded_danger)
+            txtSummaryScore.text = getSummaryScore(if (gameViewModel!!.result.value != false) gameViewModel!!.correctScore.value?:0 else gameViewModel!!.inCorrectScore.value?:0)
+            imgResult.setImageResource(if (gameViewModel!!.result.value != false) R.drawable.correct else R.drawable.incorrect)
 
             btnNext.setOnClickListener {
                 view?.findNavController()?.navigate(
                     ResultFragmentDirections.actionResultFragmentToPlayFragment(
-                        gameViewModel.correctScore.value?:0,
-                        gameViewModel.inCorrectScore.value?:0,
-                        gameViewModel.menu.value?:0
+                        gameViewModel!!.correctScore.value?:0,
+                        gameViewModel!!.inCorrectScore.value?:0,
+                        gameViewModel!!.menu.value?:0
                     )
                 )
             }
