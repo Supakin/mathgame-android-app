@@ -4,7 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GameViewModel(finalCorrectScore : Int = 0, finalInCorrectScore: Int = 0, finalMenu: Int = 0, finalResult: Boolean = true) : ViewModel() {
+class GameViewModel(finalCorrectScore : Int = 0,
+                    finalInCorrectScore: Int = 0,
+                    finalMenu: Int = 0,
+                    finalResult: Boolean = true) : ViewModel() {
+
     private  val _correctScore = MutableLiveData<Int>()
     val correctScore: LiveData<Int>
         get() = _correctScore

@@ -12,11 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentResultBinding
+import buu.supakin.mathgameverviewmodel.modelfactories.GameViewModelFactory
 import buu.supakin.mathgameverviewmodel.models.GameViewModel
 
 class ResultFragment : Fragment() {
     private lateinit var binding: FragmentResultBinding
     private lateinit var gameViewModel: GameViewModel
+    private lateinit var  gameViewModelFactory: GameViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +27,14 @@ class ResultFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
-        gameViewModel = GameViewModel(
+        gameViewModelFactory = GameViewModelFactory(
             ResultFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
             ResultFragmentArgs.fromBundle(requireArguments()).scoreInCorrect,
             ResultFragmentArgs.fromBundle(requireArguments()).menu,
             ResultFragmentArgs.fromBundle(requireArguments()).result
         )
 
-//        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        gameViewModel = ViewModelProvider(this, gameViewModelFactory).get(GameViewModel::class.java)
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
+import buu.supakin.mathgameverviewmodel.modelfactories.GameViewModelFactory
 import buu.supakin.mathgameverviewmodel.models.GameViewModel
 import buu.supakin.mathgameverviewmodel.models.QuestionModel
 
@@ -20,6 +21,7 @@ class PlayFragment : Fragment() {
     private var btnArray = arrayListOf<Button>()
     private lateinit var binding: FragmentPlayBinding
     private lateinit var gameViewModel: GameViewModel
+    private lateinit var  gameViewModelFactory: GameViewModelFactory
     private lateinit var questionModel: QuestionModel
 
 
@@ -30,13 +32,13 @@ class PlayFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_play, container, false)
 
-        gameViewModel = GameViewModel(
+        gameViewModelFactory = GameViewModelFactory(
             PlayFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
             PlayFragmentArgs.fromBundle(requireArguments()).scoreInCorrect,
             PlayFragmentArgs.fromBundle(requireArguments()).menu
         )
 
-//        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        gameViewModel = ViewModelProvider(this, gameViewModelFactory).get(GameViewModel::class.java)
         questionModel = QuestionModel(gameViewModel!!.menu.value?:0)
         binding.gameViewModel = gameViewModel
         binding.questionModel = questionModel
