@@ -17,7 +17,6 @@ import buu.supakin.mathgameverviewmodel.models.QuestionModel
 
 
 class PlayFragment : Fragment() {
-    private var realAnswer = 0
     private var btnArray = arrayListOf<Button>()
     private lateinit var binding: FragmentPlayBinding
     private lateinit var gameViewModel: GameViewModel
@@ -37,9 +36,10 @@ class PlayFragment : Fragment() {
             PlayFragmentArgs.fromBundle(requireArguments()).menu
         )
 
-        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        questionModel = QuestionModel(gameViewModel.menu.value?:0)
+//        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        questionModel = QuestionModel(gameViewModel!!.menu.value?:0)
         binding.gameViewModel = gameViewModel
+        binding.questionModel = questionModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.apply{
@@ -54,8 +54,8 @@ class PlayFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 PlayFragmentDirections.actionPlayFragmentToMenuFragment(
-                    gameViewModel.correctScore.value?:0,
-                    gameViewModel.inCorrectScore.value?:0,
+                    gameViewModel!!.correctScore.value?:0,
+                    gameViewModel!!.inCorrectScore.value?:0,
                 )
             )
         }
@@ -66,18 +66,9 @@ class PlayFragment : Fragment() {
     }
 
     private fun play() {
-        this.setAllText()
         this.setAllButton()
     }
 
-    private fun setAllText () {
-        binding.apply {
-            txtNumber1.text = questionModel.num1.toString()
-            txtNumber2.text = questionModel.num2.toString()
-            txtOperator.text = questionModel.operator
-            txtGuideLine.text = questionModel.guideline
-        }
-    }
 
     private fun setAllButton () {
         binding.apply{
@@ -89,7 +80,7 @@ class PlayFragment : Fragment() {
             )
         }
         for ((index, btn) in btnArray.withIndex()) {
-            btn.text = questionModel.answerArray[index].toString()
+            btn.text = questionModel!!.answerArray[index].toString()
             btn.setOnClickListener { this.getResult(btn.text.toString().toInt()) }
         }
     }
@@ -97,11 +88,11 @@ class PlayFragment : Fragment() {
 
 
     private fun getResult(answer: Int)  {
-        val result = if (questionModel.getResult(answer)) {
-            gameViewModel.onCorrect()
+        val result = if (questionModel!!.getResult(answer)) {
+            gameViewModel!!.onCorrect()
             true
         } else {
-            gameViewModel.onInCorrect()
+            gameViewModel!!.onInCorrect()
             false
         }
 

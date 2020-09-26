@@ -32,7 +32,7 @@ class ResultFragment : Fragment() {
             ResultFragmentArgs.fromBundle(requireArguments()).result
         )
 
-        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+//        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
             MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
         )
 
-        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+//        gameViewModel = ViewModelProvider(this, gameViewModel).get(GameViewModel::class.java)
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

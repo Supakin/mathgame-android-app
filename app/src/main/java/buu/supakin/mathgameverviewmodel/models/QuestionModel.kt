@@ -72,19 +72,19 @@ class QuestionModel (menu: Int) {
 
     private fun initAnswerArray () : ArrayList<Int> {
         val answerIndex = Random.nextInt(0, 3)
-        val array = arrayListOf<Int>()
+        val arrayAnswerDummy = arrayListOf<Int>()
         for (index in 0..3) {
             if (index == answerIndex) {
-                array.add(this.realAnswer)
+                arrayAnswerDummy.add(this.realAnswer)
             } else {
-                array.add(this.initAnotherAnswer())
+                arrayAnswerDummy.add(this.initAnotherAnswer(arrayAnswerDummy))
             }
         }
 
-        return array
+        return arrayAnswerDummy
     }
 
-    private fun initAnotherAnswer(): Int {
+    private fun initAnotherAnswer(array: ArrayList<Int>): Int {
         while (true) {
             val anotherAnswer = when (menu) {
                 1 -> Random.nextInt(0, 20)
@@ -93,7 +93,7 @@ class QuestionModel (menu: Int) {
                 else -> Random.nextInt(0, 10)
             }
 
-            if (!answerArray.contains(anotherAnswer)) return anotherAnswer
+            if (!array.contains(anotherAnswer)) return anotherAnswer
             else continue
         }
     }

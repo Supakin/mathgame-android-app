@@ -32,15 +32,11 @@ class MenuFragment : Fragment() {
             MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
         )
 
-        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+//        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         binding.gameViewModel = gameViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.apply {
-
-            txtScoreCorrect.text = gameViewModel!!.correctScore.value.toString()
-            txtScoreInCorrect.text = gameViewModel!!.inCorrectScore.value.toString()
-
             btnPlusMode.setOnClickListener {
                 view?.findNavController()?.navigate(
                     MenuFragmentDirections.actionMenuFragmentToPlayFragment(
