@@ -40,19 +40,31 @@ class MenuFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MenuViewModel::class.java)
 
         viewModel.eventNextToPlusMode.observe(viewLifecycleOwner, Observer { eventNextToPlusMode ->
-            if (eventNextToPlusMode) onNextToPlay(1)
+            if (eventNextToPlusMode) {
+                onNextToPlay(1)
+                viewModel.onNextToPlusModeComplete()
+            }
         })
 
         viewModel.eventNextToMinusMode.observe(viewLifecycleOwner, Observer { eventNextToMinusMode ->
-            if (eventNextToMinusMode) onNextToPlay(2)
+            if (eventNextToMinusMode) {
+                onNextToPlay(2)
+                viewModel.onNextToMinusModeComplete()
+            }
         })
 
         viewModel.eventNextToMultipliedMode.observe(viewLifecycleOwner, Observer { eventNextToMultipliedMode ->
-            if (eventNextToMultipliedMode) onNextToPlay(3)
+            if (eventNextToMultipliedMode) {
+                onNextToPlay(3)
+                viewModel.onNextToMultipliedModeComplete()
+            }
         })
 
         viewModel.eventNextToDivideMode.observe(viewLifecycleOwner, Observer { eventNextToDivideMode ->
-            if (eventNextToDivideMode) onNextToPlay(4)
+            if (eventNextToDivideMode) {
+                onNextToPlay(4)
+                viewModel.onNextToDivideModeComplete()
+            }
         })
 
         binding.menuViewModel = viewModel

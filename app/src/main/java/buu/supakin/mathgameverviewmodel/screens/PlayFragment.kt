@@ -40,7 +40,10 @@ class PlayFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(PlayViewModel::class.java)
 
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext->
-            if (eventNext) onNext()
+            if (eventNext) {
+                onNext()
+                viewModel.onNextComplete()
+            }
         })
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {

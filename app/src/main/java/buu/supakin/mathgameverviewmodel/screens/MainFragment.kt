@@ -41,7 +41,10 @@ class MainFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->
-            if (eventNext) onNext()
+            if (eventNext)  {
+                onNext()
+                viewModel.onNextComplete()
+            }
         })
 
 

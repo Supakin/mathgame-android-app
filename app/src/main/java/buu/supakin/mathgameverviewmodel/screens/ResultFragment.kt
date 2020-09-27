@@ -40,7 +40,10 @@ class ResultFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(ResultViewModel::class.java)
 
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->
-            if (eventNext) onNext()
+            if (eventNext) {
+                onNext()
+                viewModel.onNextComplete()
+            }
         })
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
