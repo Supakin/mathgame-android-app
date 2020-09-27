@@ -1,5 +1,6 @@
 package buu.supakin.mathgameverviewmodel.models
 
+import android.util.Log
 import kotlin.random.Random
 
 class Question (menu: Int) {
@@ -19,6 +20,8 @@ class Question (menu: Int) {
         this.answerArray = this.initAnswerArray()
         this.operator = this.initOperator()
         this.guideline = this.initGuideLine()
+        Log.i("PlayViewModel", realAnswer.toString())
+        Log.i("PlayViewModel", answerArray.toString())
     }
 
     private fun initNum1 () : Int {

@@ -1,5 +1,6 @@
 package buu.supakin.mathgameverviewmodel.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,21 +34,28 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         _question.value = Question(menu)
     }
 
-    fun onCorrect () {
+    private fun onCorrect () {
         _score.value?.onCorrect()
     }
 
-    fun onInCorrect () {
+    private fun onInCorrect () {
         _score.value?.onInCorrect()
     }
 
-    fun getResult () : Boolean? {
-        return _answer.value?.let { _question.value?.getResult(it) }
+    fun getResult () : Boolean {
+        Log.i("GetResult", _answer.value.toString())
+        return if (_question.value?.getResult(_answer.value?:0)!!) {
+            onCorrect()
+            true
+        } else {
+            onInCorrect()
+            false
+        }
     }
 
-    fun onNext (answer: Int) {
+    fun onNext (index: Int) {
+        _answer.value = _question.value!!.answerArray[index]
         _eventNext.value = true
-        _answer.value = _question.value!!.answerArray[answer]
     }
 
     fun onNextComplete () {

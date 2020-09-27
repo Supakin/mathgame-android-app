@@ -22,7 +22,6 @@ import buu.supakin.mathgameverviewmodel.viewmodels.PlayViewModel
 
 
 class PlayFragment : Fragment() {
-    private var btnArray = arrayListOf<Button>()
     private lateinit var binding: FragmentPlayBinding
     private lateinit var viewModel: PlayViewModel
     private lateinit var  viewModelFactory: PlayViewModelFactory
@@ -66,12 +65,13 @@ class PlayFragment : Fragment() {
     }
 
     private fun onNext () {
+        val result : Boolean  = viewModel!!.getResult()
         view?.findNavController()?.navigate(
             PlayFragmentDirections.actionPlayFragmentToResultFragment(
                 viewModel!!.score.value?.scoreCorrect?:0,
                 viewModel!!.score.value?.scoreInCorrect?:0,
                 viewModel!!.menu.value?:0,
-                viewModel!!.getResult()?: false
+                result
             )
         )
     }
