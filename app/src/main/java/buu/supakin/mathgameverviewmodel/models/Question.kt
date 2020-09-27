@@ -96,7 +96,7 @@ class Question (menu: Int) {
                 else -> Random.nextInt(0, 10)
             }
 
-            if (!array.contains(anotherAnswer)) return anotherAnswer
+            if (!array.contains(anotherAnswer) && anotherAnswer != this.realAnswer) return anotherAnswer
             else continue
         }
     }
