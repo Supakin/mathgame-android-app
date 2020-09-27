@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,9 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
-import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
-import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
-import buu.supakin.mathgameverviewmodel.models.Question
 import buu.supakin.mathgameverviewmodel.models.Score
 import buu.supakin.mathgameverviewmodel.viewmodelfactories.PlayViewModelFactory
 import buu.supakin.mathgameverviewmodel.viewmodels.PlayViewModel
@@ -59,8 +55,6 @@ class PlayFragment : Fragment() {
         binding.playViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-//        this.play()
-
         return binding.root
     }
 
@@ -75,47 +69,6 @@ class PlayFragment : Fragment() {
             )
         )
     }
-
-//    private fun play() {
-//        this.setAllButton()
-//    }
-
-
-//    private fun setAllButton () {
-//        binding.apply{
-//            btnArray = arrayListOf(
-//                btnAnswer1,
-//                btnAnswer2,
-//                btnAnswer3,
-//                btnAnswer4
-//            )
-//        }
-//        for ((index, btn) in btnArray.withIndex()) {
-//            btn.text = question!!.answerArray[index].toString()
-//            btn.setOnClickListener { this.getResult(btn.text.toString().toInt()) }
-//        }
-//    }
-
-
-
-//    private fun getResult(answer: Int)  {
-//        val result = if (question!!.getResult(answer)) {
-//            gameViewModel!!.onCorrect()
-//            true
-//        } else {
-//            gameViewModel!!.onInCorrect()
-//            false
-//        }
-//
-//        view?.findNavController()?.navigate(
-//            PlayFragmentDirections.actionPlayFragmentToResultFragment(
-//                gameViewModel.correctScore.value?:0,
-//                gameViewModel.inCorrectScore.value?:0,
-//                question.menu,
-//                result
-//            )
-//        )
-//    }
 
 
 }

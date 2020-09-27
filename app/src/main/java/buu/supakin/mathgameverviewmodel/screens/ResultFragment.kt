@@ -1,6 +1,5 @@
 package buu.supakin.mathgameverviewmodel.screens
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,9 +13,7 @@ import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentResultBinding
 import buu.supakin.mathgameverviewmodel.models.Score
-import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
 import buu.supakin.mathgameverviewmodel.viewmodelfactories.ResultViewModelFactory
-import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
 import buu.supakin.mathgameverviewmodel.viewmodels.ResultViewModel
 
 class ResultFragment : Fragment() {
