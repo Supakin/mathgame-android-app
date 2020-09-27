@@ -2,6 +2,7 @@ package buu.supakin.mathgameverviewmodel.models
 
 import kotlin.random.Random
 
+@Suppress("VARIABLE_WITH_REDUNDANT_INITIALIZER")
 class Question (menu: Int) {
     var menu = 0
     private var realAnswer = 0
@@ -100,5 +101,14 @@ class Question (menu: Int) {
 
     fun getResult (answer: Int): Boolean {
         return answer == this.realAnswer
+    }
+
+    fun randomPositionAnotherAnswer () : Int {
+        val realPosition = answerArray.indexOf(realAnswer)
+        while (true) {
+            val index = Random.nextInt(0,3)
+            if (index != realPosition) return index
+            else continue
+        }
     }
 }

@@ -1,12 +1,36 @@
 package buu.supakin.mathgameverviewmodel.viewmodels
 
+import android.os.CountDownTimer
+import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import buu.supakin.mathgameverviewmodel.models.Question
 import buu.supakin.mathgameverviewmodel.models.Score
 
 class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
+    companion object {
+        // Time when the game is over
+        private const val DONE = 0L
+        // Countdown time interval
+        private const val ONE_SECOND = 1000L
+        // Total time for the game
+        private const val COUNTDOWN_TIME = 30000L
+    }
+
+    // Countdown time
+    private val _currentTime = MutableLiveData<Long>()
+    private val currentTime: LiveData<Long>
+        get() = _currentTime
+
+    private val timer: CountDownTimer
+
+    // The String version of the current time
+    val currentTimeString = Transformations.map(currentTime) { time ->
+        DateUtils.formatElapsedTime(time)
+    }
+
     private val _score = MutableLiveData<Score>()
     val score: LiveData<Score>
         get() = _score
@@ -20,7 +44,7 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         get() = _question
 
     private val _answer = MutableLiveData<Int>()
-    val answer: LiveData<Int>
+    private val answer: LiveData<Int>
         get() = _answer
 
     private val _eventNext = MutableLiveData<Boolean>()
@@ -31,6 +55,21 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         _score.value = score
         _menu.value = menu
         _question.value = Question(menu)
+
+        timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                _currentTime.value = millisUntilFinished/ONE_SECOND
+
+            }
+
+            override fun onFinish() {
+                _currentTime.value = DONE
+                onNext(question.value!!.randomPositionAnotherAnswer())
+            }
+        }
+
+        timer.start()
     }
 
     private fun onCorrect () {
@@ -42,7 +81,7 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
     }
 
     fun getResult () : Boolean {
-        return if (_question.value?.getResult(_answer.value?:0)!!) {
+        return if (_question.value?.getResult(answer.value?:0)!!) {
             onCorrect()
             true
         } else {
@@ -58,6 +97,11 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
 
     fun onNextComplete () {
         _eventNext.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        timer.cancel()
     }
 
 }
