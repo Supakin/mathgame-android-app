@@ -2,7 +2,7 @@ package buu.supakin.mathgameverviewmodel.models
 
 import kotlin.random.Random
 
-class QuestionModel (menu: Int) {
+class Question (menu: Int) {
     var menu = 0
     private var realAnswer = 0
     var num1 = 0

@@ -6,10 +6,10 @@
     <data>
         <variable
             name="gameViewModel"
-            type="buu.supakin.mathgameverviewmodel.models.GameViewModel" />
+            type="buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel" />
         <variable
             name="questionModel"
-            type="buu.supakin.mathgameverviewmodel.models.QuestionModel" />
+            type="buu.supakin.mathgameverviewmodel.models.Question" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
-import buu.supakin.mathgameverviewmodel.modelfactories.GameViewModelFactory
-import buu.supakin.mathgameverviewmodel.models.GameViewModel
+import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
+import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
 import kotlin.system.exitProcess
 
 class MainFragment : Fragment() {

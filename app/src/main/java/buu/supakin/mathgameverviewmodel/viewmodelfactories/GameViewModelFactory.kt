@@ -1,8 +1,8 @@
-package buu.supakin.mathgameverviewmodel.modelfactories;
+package buu.supakin.mathgameverviewmodel.viewmodelfactories;
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import buu.supakin.mathgameverviewmodel.models.GameViewModel
+import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
 import java.lang.IllegalArgumentException
 
 class GameViewModelFactory( private val finalCorrectScore : Int = 0,

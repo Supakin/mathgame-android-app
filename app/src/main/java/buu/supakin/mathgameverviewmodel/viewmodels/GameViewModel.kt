@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.models
+package buu.supakin.mathgameverviewmodel.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

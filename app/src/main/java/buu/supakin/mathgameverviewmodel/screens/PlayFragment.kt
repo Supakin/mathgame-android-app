@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentPlayBinding
-import buu.supakin.mathgameverviewmodel.modelfactories.GameViewModelFactory
-import buu.supakin.mathgameverviewmodel.models.GameViewModel
-import buu.supakin.mathgameverviewmodel.models.QuestionModel
+import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
+import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
+import buu.supakin.mathgameverviewmodel.models.Question
 
 
 class PlayFragment : Fragment() {
@@ -22,7 +22,7 @@ class PlayFragment : Fragment() {
     private lateinit var binding: FragmentPlayBinding
     private lateinit var gameViewModel: GameViewModel
     private lateinit var  gameViewModelFactory: GameViewModelFactory
-    private lateinit var questionModel: QuestionModel
+    private lateinit var question: Question
 
 
     override fun onCreateView(
@@ -39,9 +39,9 @@ class PlayFragment : Fragment() {
         )
 
         gameViewModel = ViewModelProvider(this, gameViewModelFactory).get(GameViewModel::class.java)
-        questionModel = QuestionModel(gameViewModel!!.menu.value?:0)
+        question = Question(gameViewModel!!.menu.value?:0)
         binding.gameViewModel = gameViewModel
-        binding.questionModel = questionModel
+        binding.questionModel = question
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.apply{
@@ -82,7 +82,7 @@ class PlayFragment : Fragment() {
             )
         }
         for ((index, btn) in btnArray.withIndex()) {
-            btn.text = questionModel!!.answerArray[index].toString()
+            btn.text = question!!.answerArray[index].toString()
             btn.setOnClickListener { this.getResult(btn.text.toString().toInt()) }
         }
     }
@@ -90,7 +90,7 @@ class PlayFragment : Fragment() {
 
 
     private fun getResult(answer: Int)  {
-        val result = if (questionModel!!.getResult(answer)) {
+        val result = if (question!!.getResult(answer)) {
             gameViewModel!!.onCorrect()
             true
         } else {
@@ -102,7 +102,7 @@ class PlayFragment : Fragment() {
             PlayFragmentDirections.actionPlayFragmentToResultFragment(
                 gameViewModel.correctScore.value?:0,
                 gameViewModel.inCorrectScore.value?:0,
-                questionModel.menu,
+                question.menu,
                 result
             )
         )
