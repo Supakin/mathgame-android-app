@@ -18,6 +18,10 @@ class ResultViewModel (score: Score = Score(), menu: Int = 0,result: Boolean = t
     val result: LiveData<Boolean>
         get() = _result
 
+    private val _resultText = MutableLiveData<String>()
+    val resultText: LiveData<String>
+        get() = _resultText
+
     private val _eventNext = MutableLiveData<Boolean>()
     val eventNext: LiveData<Boolean>
         get() = _eventNext
@@ -26,6 +30,12 @@ class ResultViewModel (score: Score = Score(), menu: Int = 0,result: Boolean = t
         _score.value = score
         _menu.value = menu
         _result.value = result
+        _resultText.value = getResult()
+    }
+
+    private fun getResult () : String {
+        if (_result.value!!) return "${_score.value?.scoreCorrect} ข้อที่ถูกแล้ว"
+        return "${_score.value?.scoreInCorrect} ข้อที่ผิดแล้ว"
     }
 
     fun onNext () {

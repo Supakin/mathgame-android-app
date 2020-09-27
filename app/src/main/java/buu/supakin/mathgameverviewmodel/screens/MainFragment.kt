@@ -7,19 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMainBinding
+import buu.supakin.mathgameverviewmodel.models.Score
 import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
+import buu.supakin.mathgameverviewmodel.viewmodelfactories.MainViewModelFactory
 import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
+import buu.supakin.mathgameverviewmodel.viewmodels.MainViewModel
 import kotlin.system.exitProcess
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
-    private lateinit var  gameViewModelFactory: GameViewModelFactory
-    private lateinit var gameViewModel: GameViewModel
+    private lateinit var viewModelFactory: MainViewModelFactory
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,28 +34,36 @@ class MainFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_main, container, false)
 
-        gameViewModelFactory = GameViewModelFactory(
-            MainFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-            MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        viewModelFactory = MainViewModelFactory(
+            Score(
+                MainFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+                MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+            )
         )
 
-        gameViewModel = ViewModelProvider(this, gameViewModelFactory).get(GameViewModel::class.java)
-        binding.gameViewModel = gameViewModel
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->
+            if (eventNext) onNext()
+        })
+
+
+        binding.mainViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.btnPlay.setOnClickListener {
-            view?.findNavController()?.navigate(
-                MainFragmentDirections.actionMainFragmentToMenuFragment(
-                    gameViewModel.correctScore.value?:0,
-                    gameViewModel.inCorrectScore.value?:0
-                )
-            )
-        }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             exitProcess(0)
         }
 
         return binding.root
+    }
+
+    private fun onNext () {
+        view?.findNavController()?.navigate(
+            MainFragmentDirections.actionMainFragmentToMenuFragment(
+                viewModel.score.value?.scoreCorrect ?:0,
+                viewModel.score.value?.scoreInCorrect ?:0
+            )
+        )
     }
 
 }

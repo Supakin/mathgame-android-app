@@ -5,11 +5,8 @@
 
     <data>
         <variable
-            name="gameViewModel"
-            type="buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel" />
-        <variable
-            name="questionModel"
-            type="buu.supakin.mathgameverviewmodel.models.Question" />
+            name="playViewModel"
+            type="buu.supakin.mathgameverviewmodel.viewmodels.PlayViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +19,7 @@
             android:id="@+id/txtNumber1"
             style="@style/textQuestion"
             android:layout_marginStart="56dp"
-            android:text="@{String.valueOf(questionModel.num1)}"
+            android:text="@{String.valueOf(playViewModel.question.num1)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/txtOperator"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="50dp"
-            android:text="@{String.valueOf(questionModel.num2)}"
+            android:text="@{String.valueOf(playViewModel.question.num2)}"
             android:textColor="@color/colorBlack"
             android:textSize="70sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +41,7 @@
             style="@style/textQuestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{questionModel.operator}"
+            android:text="@{playViewModel.question.operator}"
             android:textColor="@color/colorBlack"
             android:textSize="70sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/txtNumber2"
@@ -55,7 +52,8 @@
             android:id="@+id/btnAnswer1"
             style="@style/btnAnswer1"
             android:layout_marginStart="40dp"
-            android:text="@string/demo_answer"
+            android:text="@{playViewModel.question.answerArray[0].toString()}"
+            android:onClick="@{()->playViewModel.onNext(0)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnAnswer2"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,7 +63,8 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="@dimen/margin_30dp"
-            android:text="@string/demo_answer"
+            android:text="@{playViewModel.question.answerArray[1].toString()}"
+            android:onClick="@{()->playViewModel.onNext(1)}"
             app:layout_constraintBottom_toTopOf="@+id/btnAnswer4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtGuideLine" />
@@ -74,7 +73,8 @@
             android:id="@+id/btnAnswer3"
             style="@style/btnAnswer3"
             android:layout_marginStart="40dp"
-            android:text="@string/demo_answer"
+            android:text="@{playViewModel.question.answerArray[2].toString()}"
+            android:onClick="@{()->playViewModel.onNext(2)}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnAnswer4"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -83,7 +83,8 @@
             style="@style/btnAnswer4"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="40dp"
-            android:text="@string/demo_answer"
+            android:text="@{playViewModel.question.answerArray[3].toString()}"
+            android:onClick="@{()->playViewModel.onNext(3)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAnswer1" />
 
@@ -91,7 +92,7 @@
             android:id="@+id/txtGuideLine"
             style="@style/caption"
             android:layout_marginTop="20dp"
-            android:text="@{questionModel.guideline}"
+            android:text="@{playViewModel.question.guideline}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtOperator" />

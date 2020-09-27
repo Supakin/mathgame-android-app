@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="gameViewModel"
-            type="buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel" />
+            name="mainViewModel"
+            type="buu.supakin.mathgameverviewmodel.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +19,7 @@
             android:id="@+id/btnPlay"
             style="@style/btnPlay"
             android:text="@string/button_play"
+            android:onClick="@{()->mainViewModel.onNext()}"
             app:layout_constraintBottom_toBottomOf="@+id/caption_credit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

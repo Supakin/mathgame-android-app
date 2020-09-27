@@ -19,6 +19,10 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
     val question: LiveData<Question>
         get() = _question
 
+    private val _answer = MutableLiveData<Int>()
+    val answer: LiveData<Int>
+        get() = _answer
+
     private val _eventNext = MutableLiveData<Boolean>()
     val eventNext: LiveData<Boolean>
         get() = _eventNext
@@ -37,12 +41,13 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         _score.value?.onInCorrect()
     }
 
-    fun getResult (answer: Int) : Boolean {
-        return _question.value?.getResult(answer)!!
+    fun getResult () : Boolean? {
+        return _answer.value?.let { _question.value?.getResult(it) }
     }
 
-    fun onNext () {
+    fun onNext (answer: Int) {
         _eventNext.value = true
+        _answer.value = _question.value!!.answerArray[answer]
     }
 
     fun onNextComplete () {

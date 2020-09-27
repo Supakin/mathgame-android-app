@@ -6,8 +6,8 @@
     >
     <data>
         <variable
-            name="gameViewModel"
-            type="buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel" />
+            name="menuViewModel"
+            type="buu.supakin.mathgameverviewmodel.viewmodels.MenuViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:text="@{String.valueOf(gameViewModel.correctScore)}"
+            android:text="@{String.valueOf(menuViewModel.score.scoreCorrect)}"
             android:textColor="@color/colorSuccess"
             android:textSize="36sp"
             android:textStyle="bold"
@@ -89,6 +89,7 @@
             style="@style/btnMenu"
             android:layout_marginStart="20dp"
             android:text="@string/plus"
+            android:onClick="@{()->menuViewModel.onNextToPlusMode()}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnMinusMode"
             app:layout_constraintEnd_toStartOf="@+id/btnMinusMode"
             app:layout_constraintHorizontal_bias="0.5"
@@ -99,6 +100,7 @@
             style="@style/btnMenu"
             android:layout_marginStart="20dp"
             android:text="@string/multiplied"
+            android:onClick="@{()->menuViewModel.onNextToMultipliedMode()}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnDivideMode"
             app:layout_constraintEnd_toStartOf="@+id/btnDivideMode"
             app:layout_constraintHorizontal_bias="0.5"
@@ -135,6 +137,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:text="@string/divide"
+            android:onClick="@{()->menuViewModel.onNextToDivideMode()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnMultipliedMode"
@@ -145,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@{String.valueOf(gameViewModel.inCorrectScore)}"
+            android:text="@{String.valueOf(menuViewModel.score.scoreInCorrect)}"
             android:textColor="@color/colorDanger"
             android:textSize="36sp"
             android:textStyle="bold"
@@ -160,6 +163,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="@dimen/margin_btn_in"
             android:text="@string/minus"
+            android:onClick="@{()->menuViewModel.onNextToMinusMode()}"
             app:layout_constraintBottom_toTopOf="@+id/btnDivideMode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

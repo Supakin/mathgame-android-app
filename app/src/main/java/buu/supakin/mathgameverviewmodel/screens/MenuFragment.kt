@@ -7,18 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverviewmodel.R
 import buu.supakin.mathgameverviewmodel.databinding.FragmentMenuBinding
-import buu.supakin.mathgameverviewmodel.viewmodelfactories.GameViewModelFactory
-import buu.supakin.mathgameverviewmodel.viewmodels.GameViewModel
+import buu.supakin.mathgameverviewmodel.models.Score
+import buu.supakin.mathgameverviewmodel.viewmodelfactories.MenuViewModelFactory
+import buu.supakin.mathgameverviewmodel.viewmodels.MenuViewModel
 
 
 class MenuFragment : Fragment() {
     private lateinit var binding: FragmentMenuBinding
-    private lateinit var  gameViewModelFactory: GameViewModelFactory
-    private lateinit var gameViewModel: GameViewModel
+    private lateinit var  viewModelFactory: MenuViewModelFactory
+    private lateinit var viewModel: MenuViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,69 +30,55 @@ class MenuFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_menu, container, false)
 
-        gameViewModelFactory = GameViewModelFactory(
-            MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-            MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+        viewModelFactory = MenuViewModelFactory(
+            Score(
+                MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
+                MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
+            )
         )
 
-        gameViewModel = ViewModelProvider(this, gameViewModelFactory).get(GameViewModel::class.java)
-        binding.gameViewModel = gameViewModel
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MenuViewModel::class.java)
+
+        viewModel.eventNextToPlusMode.observe(viewLifecycleOwner, Observer { eventNextToPlusMode ->
+            if (eventNextToPlusMode) onNextToPlay(1)
+        })
+
+        viewModel.eventNextToMinusMode.observe(viewLifecycleOwner, Observer { eventNextToMinusMode ->
+            if (eventNextToMinusMode) onNextToPlay(2)
+        })
+
+        viewModel.eventNextToMultipliedMode.observe(viewLifecycleOwner, Observer { eventNextToMultipliedMode ->
+            if (eventNextToMultipliedMode) onNextToPlay(3)
+        })
+
+        viewModel.eventNextToDivideMode.observe(viewLifecycleOwner, Observer { eventNextToDivideMode ->
+            if (eventNextToDivideMode) onNextToPlay(4)
+        })
+
+        binding.menuViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.apply {
-            btnPlusMode.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel!!.correctScore.value?:0,
-                        gameViewModel!!.inCorrectScore.value?:0,
-                        1
-                    )
-                )
-            }
-
-            btnMinusMode.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel!!.correctScore.value?:0,
-                        gameViewModel!!.inCorrectScore.value?:0,
-                        2
-                    )
-                )
-            }
-
-            btnMultipliedMode.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel!!.correctScore.value?:0,
-                        gameViewModel!!.inCorrectScore.value?:0,
-                        3
-                    )
-                )
-            }
-
-            btnDivideMode.setOnClickListener {
-                view?.findNavController()?.navigate(
-                    MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                        gameViewModel!!.correctScore.value?:0,
-                        gameViewModel!!.inCorrectScore.value?:0,
-                        4
-                    )
-                )
-            }
-
-        }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
                 MenuFragmentDirections.actionMenuFragmentToMainFragment(
-                    gameViewModel!!.correctScore.value?:0,
-                    gameViewModel!!.inCorrectScore.value?:0
+                    viewModel!!.score.value?.scoreCorrect ?:0,
+                    viewModel!!.score.value?.scoreInCorrect ?:0
                 )
             )
         }
 
-
         return binding.root
+    }
+
+
+    private fun onNextToPlay (menu: Int) {
+        view?.findNavController()?.navigate(
+            MenuFragmentDirections.actionMenuFragmentToPlayFragment(
+                viewModel!!.score.value?.scoreCorrect ?:0,
+                viewModel!!.score.value?.scoreInCorrect ?:0,
+                menu
+            )
+        )
     }
 
 }
