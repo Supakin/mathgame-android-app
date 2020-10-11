@@ -55,10 +55,12 @@
             android:hint="@string/please_key_name"
             android:inputType="textPersonName"
             android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/btnPlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="467dp"
-            tools:text="@string/please_key_name" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            tools:text="@string/please_key_name"
+            android:autofillHints="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
