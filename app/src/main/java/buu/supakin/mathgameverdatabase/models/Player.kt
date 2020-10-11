@@ -33,4 +33,12 @@ class Player (playerId: Long = -1,
     }
 
     fun getScoreInCorrect () = this.scoreInCorrect
+
+    fun onCorrect () {
+        this.scoreCorrect++
+    }
+
+    fun onInCorrect () {
+        this.scoreInCorrect++
+    }
 }

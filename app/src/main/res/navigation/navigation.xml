@@ -61,5 +61,9 @@
         <argument
             android:name="menu"
             android:defaultValue="0" />
+        <argument
+            android:name="result"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 </navigation>

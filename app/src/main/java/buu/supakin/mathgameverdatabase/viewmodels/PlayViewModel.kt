@@ -2,14 +2,18 @@ package buu.supakin.mathgameverdatabase.viewmodels
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import buu.supakin.mathgameverdatabase.createPlayer
+import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
+import buu.supakin.mathgameverdatabase.database.PlayerTable
+import buu.supakin.mathgameverdatabase.models.Player
 import buu.supakin.mathgameverdatabase.models.Question
 import buu.supakin.mathgameverdatabase.models.Score
+import kotlinx.coroutines.launch
 
-class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
+class PlayViewModel (private val database: PlayerDatabaseDao, playerId: Long, menu: Int = 0) : ViewModel()  {
+    private val playerId: Long = playerId
+
     companion object {
         // Time when the game is over
         private const val DONE = 0L
@@ -31,9 +35,9 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         DateUtils.formatElapsedTime(time)
     }
 
-    private val _score = MutableLiveData<Score>()
-    val score: LiveData<Score>
-        get() = _score
+    private val _player = MutableLiveData<Player>()
+    val player: LiveData<Player>
+        get() = _player
 
     private val _menu = MutableLiveData<Int>()
     val menu: LiveData<Int>
@@ -52,7 +56,7 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
         get() = _eventNext
 
     init {
-        _score.value = score
+        initPlayer()
         _menu.value = menu
         _question.value = Question(menu)
 
@@ -73,11 +77,11 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
     }
 
     private fun onCorrect () {
-        _score.value?.onCorrect()
+        _player.value?.onCorrect()
     }
 
     private fun onInCorrect () {
-        _score.value?.onInCorrect()
+        _player.value?.onInCorrect()
     }
 
     fun getResult () : Boolean {
@@ -102,6 +106,17 @@ class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
     override fun onCleared() {
         super.onCleared()
         timer.cancel()
+    }
+
+    private suspend fun getPlayer(id: Long): PlayerTable? {
+        return database.get(id)
+    }
+
+    private fun initPlayer () {
+        viewModelScope.launch {
+            val playerTable = getPlayer(playerId)
+            _player.value = playerTable?.let { createPlayer(it) }
+        }
     }
 
 }

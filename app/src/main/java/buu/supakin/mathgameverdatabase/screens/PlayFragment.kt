@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverdatabase.R
+import buu.supakin.mathgameverdatabase.database.PlayerDatabase
 import buu.supakin.mathgameverdatabase.databinding.FragmentPlayBinding
 import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodelfactories.PlayViewModelFactory
@@ -28,12 +29,11 @@ class PlayFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_play, container, false)
-
+        val application = requireNotNull(this.activity).application
+        val dataSource = PlayerDatabase.getInstance(application).playerDatabaseDao
         viewModelFactory = PlayViewModelFactory(
-            Score(
-                PlayFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-                PlayFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
-            ),
+            dataSource,
+            PlayFragmentArgs.fromBundle(requireArguments()).playerId,
             PlayFragmentArgs.fromBundle(requireArguments()).menu
         )
 
@@ -48,10 +48,7 @@ class PlayFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             view?.findNavController()?.navigate(
-                PlayFragmentDirections.actionPlayFragmentToMenuFragment(
-                    viewModel!!.score?.value?.scoreCorrect?:0,
-                    viewModel!!.score?.value?.scoreInCorrect?:0,
-                )
+                PlayFragmentDirections.actionPlayFragmentToMenuFragment(viewModel.player.value!!.getPlayerId())
             )
         }
 
@@ -65,9 +62,8 @@ class PlayFragment : Fragment() {
         val result : Boolean  = viewModel!!.getResult()
         view?.findNavController()?.navigate(
             PlayFragmentDirections.actionPlayFragmentToResultFragment(
-                viewModel!!.score.value?.scoreCorrect?:0,
-                viewModel!!.score.value?.scoreInCorrect?:0,
-                viewModel!!.menu.value?:0,
+                viewModel.player.value!!.getPlayerId(),
+                viewModel.menu.value!!,
                 result
             )
         )
