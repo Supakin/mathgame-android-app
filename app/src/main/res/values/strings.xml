@@ -37,4 +37,5 @@
     <string name="menu_menu">หมวดหมู่เกม</string>
     <string name="menu_play">กำลังเล่น</string>
     <string name="menu_result">ผลลัพธ์</string>
+    <string name="please_key_name">กรุณากรอกชื่อผู้เล่น</string>
 </resources>

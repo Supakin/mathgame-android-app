@@ -39,12 +39,26 @@
             android:id="@+id/imageView3"
             android:layout_width="400dp"
             android:layout_height="300dp"
+            android:layout_marginTop="100dp"
             android:contentDescription="@string/content_description_img_main"
-            app:layout_constraintBottom_toBottomOf="@+id/caption_credit"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/img_math_topic" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="@string/please_key_name"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="467dp"
+            tools:text="@string/please_key_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
