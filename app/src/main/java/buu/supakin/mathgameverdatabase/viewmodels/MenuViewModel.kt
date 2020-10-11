@@ -3,12 +3,20 @@ package buu.supakin.mathgameverdatabase.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import buu.supakin.mathgameverdatabase.createPlayer
+import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
+import buu.supakin.mathgameverdatabase.database.PlayerTable
+import buu.supakin.mathgameverdatabase.models.Player
 import buu.supakin.mathgameverdatabase.models.Score
+import kotlinx.coroutines.launch
 
-class MenuViewModel (score : Score = Score()) : ViewModel() {
-    private val _score = MutableLiveData<Score>()
-    val score: LiveData<Score>
-        get() = _score
+class MenuViewModel (private val database: PlayerDatabaseDao, playerId: Long) : ViewModel() {
+    private val playerId: Long = playerId
+
+    private val _player = MutableLiveData<Player>()
+    val player: LiveData<Player>
+        get() = _player
 
     private val _eventNextToPlusMode = MutableLiveData<Boolean>()
     val eventNextToPlusMode: LiveData<Boolean>
@@ -27,7 +35,7 @@ class MenuViewModel (score : Score = Score()) : ViewModel() {
         get() = _eventNextToDivideMode
 
     init {
-        _score.value = score
+        initPlayer()
     }
 
     fun onNextToPlusMode () {
@@ -60,5 +68,16 @@ class MenuViewModel (score : Score = Score()) : ViewModel() {
 
     fun onNextToDivideModeComplete () {
         _eventNextToDivideMode.value = false
+    }
+
+    private suspend fun getPlayer(id: Long): PlayerTable? {
+        return database.get(id)
+    }
+
+    private fun initPlayer () {
+        viewModelScope.launch {
+            val playerTable = getPlayer(playerId)
+            _player.value = playerTable?.let { createPlayer(it) }
+        }
     }
 }

@@ -12,14 +12,6 @@
             app:destination="@id/menuFragment"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="scoreCorrect"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="scoreInCorrect"
-            android:defaultValue="0"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
@@ -29,17 +21,13 @@
             android:id="@+id/action_menuFragment_to_playFragment"
             app:destination="@id/playFragment"
             app:popUpTo="@id/menuFragment" />
-        <argument
-            android:name="scoreCorrect"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="scoreInCorrect"
-            android:defaultValue="0"
-            app:argType="integer" />
         <action
             android:id="@+id/action_menuFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="playerId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/playFragment"
@@ -49,18 +37,16 @@
             android:id="@+id/action_playFragment_to_resultFragment"
             app:destination="@id/resultFragment"
             app:popUpTo="@id/playFragment" />
-        <argument
-            android:name="scoreCorrect"
-            app:argType="integer" />
-        <argument
-            android:name="scoreInCorrect"
-            app:argType="integer" />
-        <argument
-            android:name="menu"
-            app:argType="integer" />
         <action
             android:id="@+id/action_playFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
+        <argument
+            android:name="playerId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <argument
+            android:name="menu"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
@@ -70,16 +56,10 @@
             android:id="@+id/action_resultFragment_to_playFragment"
             app:destination="@id/playFragment" />
         <argument
-            android:name="scoreCorrect"
-            app:argType="integer" />
-        <argument
-            android:name="scoreInCorrect"
-            app:argType="integer" />
+            android:name="playerId"
+            app:argType="long" />
         <argument
             android:name="menu"
-            app:argType="integer" />
-        <argument
-            android:name="result"
-            app:argType="boolean" />
+            android:defaultValue="0" />
     </fragment>
 </navigation>

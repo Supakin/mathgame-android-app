@@ -8,10 +8,10 @@ import androidx.room.Update
 @Dao
 interface PlayerDatabaseDao {
     @Insert
-    suspend fun insert(player: PlayerTable)
+    suspend fun insert(playerTable: PlayerTable)
 
     @Update
-    suspend fun update(player: PlayerTable)
+    suspend fun update(playerTable: PlayerTable)
 
     @Query("SELECT * from player_table WHERE playerId = :key")
     suspend fun get(key: Long): PlayerTable?

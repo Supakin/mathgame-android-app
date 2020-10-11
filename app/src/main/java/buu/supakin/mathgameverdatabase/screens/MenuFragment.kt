@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverdatabase.R
+import buu.supakin.mathgameverdatabase.database.PlayerDatabase
 import buu.supakin.mathgameverdatabase.databinding.FragmentMenuBinding
 import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodelfactories.MenuViewModelFactory
@@ -29,12 +30,11 @@ class MenuFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_menu, container, false)
-
+        val application = requireNotNull(this.activity).application
+        val dataSource = PlayerDatabase.getInstance(application).playerDatabaseDao
         viewModelFactory = MenuViewModelFactory(
-            Score(
-                MenuFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-                MenuFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
-            )
+            dataSource,
+            MenuFragmentArgs.fromBundle(requireArguments()).playerId
         )
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MenuViewModel::class.java)
@@ -71,12 +71,7 @@ class MenuFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            view?.findNavController()?.navigate(
-                MenuFragmentDirections.actionMenuFragmentToMainFragment(
-                    viewModel!!.score.value?.scoreCorrect ?:0,
-                    viewModel!!.score.value?.scoreInCorrect ?:0
-                )
-            )
+            view?.findNavController()?.navigate(MenuFragmentDirections.actionMenuFragmentToMainFragment())
         }
 
         return binding.root
@@ -86,8 +81,7 @@ class MenuFragment : Fragment() {
     private fun onNextToPlay (menu: Int) {
         view?.findNavController()?.navigate(
             MenuFragmentDirections.actionMenuFragmentToPlayFragment(
-                viewModel!!.score.value?.scoreCorrect ?:0,
-                viewModel!!.score.value?.scoreInCorrect ?:0,
+                viewModel.player.value!!.getPlayerId(),
                 menu
             )
         )

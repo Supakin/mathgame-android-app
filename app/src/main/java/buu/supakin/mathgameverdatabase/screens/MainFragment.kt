@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import buu.supakin.mathgameverdatabase.R
+import buu.supakin.mathgameverdatabase.database.PlayerDatabase
 import buu.supakin.mathgameverdatabase.databinding.FragmentMainBinding
 import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodelfactories.MainViewModelFactory
@@ -32,21 +33,17 @@ class MainFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_main, container, false)
 
-        viewModelFactory = MainViewModelFactory(
-            Score(
-                MainFragmentArgs.fromBundle(requireArguments()).scoreCorrect,
-                MainFragmentArgs.fromBundle(requireArguments()).scoreInCorrect
-            )
-        )
-
+        val application = requireNotNull(this.activity).application
+        val dataSource = PlayerDatabase.getInstance(application).playerDatabaseDao
+        viewModelFactory = MainViewModelFactory(dataSource)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->
             if (eventNext)  {
                 onNext()
                 viewModel.onNextComplete()
             }
         })
-
 
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -60,10 +57,7 @@ class MainFragment : Fragment() {
 
     private fun onNext () {
         view?.findNavController()?.navigate(
-            MainFragmentDirections.actionMainFragmentToMenuFragment(
-                viewModel.score.value?.scoreCorrect ?:0,
-                viewModel.score.value?.scoreInCorrect ?:0
-            )
+            MainFragmentDirections.actionMainFragmentToMenuFragment(viewModel.player.value!!.getPlayerId())
         )
     }
 
