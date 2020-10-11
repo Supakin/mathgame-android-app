@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel
+package buu.supakin.mathgameverdatabase
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

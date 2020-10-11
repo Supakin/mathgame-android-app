@@ -1,9 +1,9 @@
-package buu.supakin.mathgameverviewmodel.viewmodelfactories
+package buu.supakin.mathgameverdatabase.viewmodelfactories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import buu.supakin.mathgameverviewmodel.models.Score
-import buu.supakin.mathgameverviewmodel.viewmodels.MainViewModel
+import buu.supakin.mathgameverdatabase.models.Score
+import buu.supakin.mathgameverdatabase.viewmodels.MainViewModel
 import java.lang.IllegalArgumentException
 
 class MainViewModelFactory (private val score : Score = Score()) : ViewModelProvider.Factory {

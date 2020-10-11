@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.screens
+package buu.supakin.mathgameverdatabase.screens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import buu.supakin.mathgameverviewmodel.R
-import buu.supakin.mathgameverviewmodel.databinding.FragmentMenuBinding
-import buu.supakin.mathgameverviewmodel.models.Score
-import buu.supakin.mathgameverviewmodel.viewmodelfactories.MenuViewModelFactory
-import buu.supakin.mathgameverviewmodel.viewmodels.MenuViewModel
+import buu.supakin.mathgameverdatabase.R
+import buu.supakin.mathgameverdatabase.databinding.FragmentMenuBinding
+import buu.supakin.mathgameverdatabase.models.Score
+import buu.supakin.mathgameverdatabase.viewmodelfactories.MenuViewModelFactory
+import buu.supakin.mathgameverdatabase.viewmodels.MenuViewModel
 
 
 class MenuFragment : Fragment() {

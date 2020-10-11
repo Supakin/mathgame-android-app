@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.models
+package buu.supakin.mathgameverdatabase.models
 
 import kotlin.random.Random
 

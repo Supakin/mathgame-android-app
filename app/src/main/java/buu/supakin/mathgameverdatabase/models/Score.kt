@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.models
+package buu.supakin.mathgameverdatabase.models
 
 class Score (scoreCorrect: Int = 0, scoreInCorrect: Int = 0) {
     var scoreCorrect = scoreCorrect

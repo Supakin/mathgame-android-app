@@ -7,7 +7,7 @@
     <data>
         <variable
             name="menuViewModel"
-            type="buu.supakin.mathgameverviewmodel.viewmodels.MenuViewModel" />
+            type="buu.supakin.mathgameverdatabase.viewmodels.MenuViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

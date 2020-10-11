@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="buu.supakin.mathgameverviewmodel.screens.MainFragment"
+        android:name="buu.supakin.mathgameverdatabase.screens.MainFragment"
         android:label="@string/menu_home">
         <action
             android:id="@+id/action_mainFragment_to_menuFragment"
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
-        android:name="buu.supakin.mathgameverviewmodel.screens.MenuFragment"
+        android:name="buu.supakin.mathgameverdatabase.screens.MenuFragment"
         android:label="@string/menu_menu">
         <action
             android:id="@+id/action_menuFragment_to_playFragment"
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/playFragment"
-        android:name="buu.supakin.mathgameverviewmodel.screens.PlayFragment"
+        android:name="buu.supakin.mathgameverdatabase.screens.PlayFragment"
         android:label="@string/menu_play">
         <action
             android:id="@+id/action_playFragment_to_resultFragment"
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
-        android:name="buu.supakin.mathgameverviewmodel.screens.ResultFragment"
+        android:name="buu.supakin.mathgameverdatabase.screens.ResultFragment"
         android:label="@string/menu_result">
         <action
             android:id="@+id/action_resultFragment_to_playFragment"

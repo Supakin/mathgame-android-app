@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.screens
+package buu.supakin.mathgameverdatabase.screens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import buu.supakin.mathgameverviewmodel.R
-import buu.supakin.mathgameverviewmodel.databinding.FragmentResultBinding
-import buu.supakin.mathgameverviewmodel.models.Score
-import buu.supakin.mathgameverviewmodel.viewmodelfactories.ResultViewModelFactory
-import buu.supakin.mathgameverviewmodel.viewmodels.ResultViewModel
+import buu.supakin.mathgameverdatabase.R
+import buu.supakin.mathgameverdatabase.databinding.FragmentResultBinding
+import buu.supakin.mathgameverdatabase.models.Score
+import buu.supakin.mathgameverdatabase.viewmodelfactories.ResultViewModelFactory
+import buu.supakin.mathgameverdatabase.viewmodels.ResultViewModel
 
 class ResultFragment : Fragment() {
     private lateinit var binding: FragmentResultBinding

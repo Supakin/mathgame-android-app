@@ -1,9 +1,9 @@
-package buu.supakin.mathgameverviewmodel.viewmodels
+package buu.supakin.mathgameverdatabase.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import buu.supakin.mathgameverviewmodel.models.Score
+import buu.supakin.mathgameverdatabase.models.Score
 
 class MenuViewModel (score : Score = Score()) : ViewModel() {
     private val _score = MutableLiveData<Score>()

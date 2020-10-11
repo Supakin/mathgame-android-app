@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel.viewmodels
+package buu.supakin.mathgameverdatabase.viewmodels
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils
@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import buu.supakin.mathgameverviewmodel.models.Question
-import buu.supakin.mathgameverviewmodel.models.Score
+import buu.supakin.mathgameverdatabase.models.Question
+import buu.supakin.mathgameverdatabase.models.Score
 
 class PlayViewModel (score : Score = Score(), menu: Int = 0) : ViewModel()  {
     companion object {

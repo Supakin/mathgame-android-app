@@ -7,7 +7,7 @@
     <data>
         <variable
             name="mainViewModel"
-            type="buu.supakin.mathgameverviewmodel.viewmodels.MainViewModel" />
+            type="buu.supakin.mathgameverdatabase.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package buu.supakin.mathgameverviewmodel
+package buu.supakin.mathgameverdatabase
 
 import org.junit.Test
 
