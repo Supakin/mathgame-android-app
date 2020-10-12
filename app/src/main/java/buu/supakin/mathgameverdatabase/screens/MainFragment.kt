@@ -40,7 +40,7 @@ class MainFragment : Fragment() {
 
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->
             if (eventNext)  {
-                onNext()
+                onNext(binding.editTextName.text.toString())
                 viewModel.onNextComplete()
             }
         })
@@ -55,7 +55,8 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun onNext () {
+    private fun onNext (editName: String) {
+        viewModel.updateName(editName)
         view?.findNavController()?.navigate(
             MainFragmentDirections.actionMainFragmentToMenuFragment(viewModel.player.value!!.getPlayerId())
         )

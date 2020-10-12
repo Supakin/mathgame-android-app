@@ -30,16 +30,7 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
     }
 
     fun onNext() {
-        viewModelScope.launch {
-            if (!hasPlayer()) {
-                var playerTable = PlayerTable()
-                playerTable.name = _name.value.toString()
-                insert(playerTable)
-                playerTable = getPlayerByName(_name.value.toString())!!
-                _player.value = createPlayer(playerTable)
-            }
-            _eventNext.value = true
-        }
+        _eventNext.value = true
 
     }
 
@@ -62,6 +53,24 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
             true
         } else {
             false
+        }
+    }
+
+    fun updateName(editName: String) {
+        viewModelScope.launch {
+            _name.value = editName
+            setPlayer()
+        }
+
+    }
+
+    private suspend fun setPlayer() {
+        if (!hasPlayer()) {
+            var playerTable = PlayerTable()
+            playerTable.name = _name.value.toString()
+            insert(playerTable)
+            playerTable = getPlayerByName(_name.value.toString())!!
+            _player.value = createPlayer(playerTable)
         }
     }
 
