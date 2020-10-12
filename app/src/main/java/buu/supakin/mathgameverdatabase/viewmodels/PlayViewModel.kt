@@ -77,11 +77,27 @@ class PlayViewModel (private val database: PlayerDatabaseDao, playerId: Long, me
     }
 
     private fun onCorrect () {
-        _player.value?.onCorrect()
+        viewModelScope.launch {
+            _player.value?.onCorrect()
+            val playerTable = PlayerTable()
+            playerTable.playerId = _player.value!!.getPlayerId()
+            playerTable.name = _player.value!!.getName()
+            playerTable.scoreCorrect = _player.value!!.getScoreCorrect()
+            playerTable.scoreInCorrect = _player.value!!.getScoreInCorrect()
+            update(playerTable)
+        }
     }
 
     private fun onInCorrect () {
-        _player.value?.onInCorrect()
+        viewModelScope.launch {
+            _player.value?.onInCorrect()
+            val playerTable = PlayerTable()
+            playerTable.playerId = _player.value!!.getPlayerId()
+            playerTable.name = _player.value!!.getName()
+            playerTable.scoreCorrect = _player.value!!.getScoreCorrect()
+            playerTable.scoreInCorrect = _player.value!!.getScoreInCorrect()
+            update(playerTable)
+        }
     }
 
     fun getResult () : Boolean {
@@ -117,6 +133,10 @@ class PlayViewModel (private val database: PlayerDatabaseDao, playerId: Long, me
             val playerTable = getPlayer(playerId)
             _player.value = playerTable?.let { createPlayer(it) }
         }
+    }
+
+    private suspend fun update (playerTable: PlayerTable) {
+        database.update(playerTable)
     }
 
 }
