@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/your_score"
-            android:textColor="#FF971D"
+            android:textColor="@color/colorMain"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageView4"
