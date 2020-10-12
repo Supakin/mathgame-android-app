@@ -19,7 +19,6 @@
             android:id="@+id/imageView3"
             android:layout_width="400dp"
             android:layout_height="300dp"
-            android:layout_marginTop="50dp"
             android:contentDescription="@string/content_description_img_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.454"
@@ -27,30 +26,50 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/img_math_topic" />
 
+        <TextView
+            android:id="@+id/texPlayerNameTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/player_name_topic"
+            android:textColor="@color/colorMain"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/please_key_name"
             android:inputType="textPersonName"
             android:text="@={mainViewModel.name}"
             android:textAlignment="center"
+            android:textColor="@color/colorMain"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/texPlayerNameTopic"
             tools:text="@string/please_key_name" />
 
         <Button
             android:id="@+id/btnPlay"
             style="@style/btnPlay"
-            android:text="@string/button_play"
+            android:layout_marginTop="40dp"
             android:onClick="@{()->mainViewModel.onNext()}"
-            app:layout_constraintBottom_toBottomOf="@+id/caption_credit"
+            android:text="@string/button_play"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
         <TextView
             android:id="@+id/caption_credit"
@@ -61,6 +80,8 @@
             android:text="@string/caption_credit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
