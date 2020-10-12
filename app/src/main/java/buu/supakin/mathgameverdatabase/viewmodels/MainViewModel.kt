@@ -1,5 +1,6 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,9 +12,7 @@ import kotlinx.coroutines.launch
 import buu.supakin.mathgameverdatabase.createPlayer
 
 class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
-    private val _name = MutableLiveData<String>()
-    val name: LiveData<String>
-        get() = _name
+    val name = MutableLiveData<String>()
 
     private val _player = MutableLiveData<Player>()
     val player: LiveData<Player>
@@ -30,8 +29,17 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
     }
 
     fun onNext() {
-        _eventNext.value = true
-
+        viewModelScope.launch {
+            if (!hasPlayer()) {
+                var playerTable = PlayerTable()
+                playerTable.name = name.value.toString()
+                insert(playerTable)
+                playerTable = getPlayerByName(name.value.toString())!!
+                Log.i("MainViewModel", playerTable.toString())
+                _player.value = createPlayer(playerTable)
+            }
+            _eventNext.value = true
+        }
     }
 
     fun onNextComplete() {
@@ -47,30 +55,13 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
     }
 
     private suspend fun hasPlayer(): Boolean {
-        val playerTable = getPlayerByName(_name.value.toString())
+        val playerTable = getPlayerByName(name.value.toString())
+        Log.i("MainViewModel1", playerTable.toString())
         return if (playerTable != null) {
             _player.value = createPlayer(playerTable)
             true
         } else {
             false
-        }
-    }
-
-    fun updateName(editName: String) {
-        viewModelScope.launch {
-            _name.value = editName
-            setPlayer()
-        }
-
-    }
-
-    private suspend fun setPlayer() {
-        if (!hasPlayer()) {
-            var playerTable = PlayerTable()
-            playerTable.name = _name.value.toString()
-            insert(playerTable)
-            playerTable = getPlayerByName(_name.value.toString())!!
-            _player.value = createPlayer(playerTable)
         }
     }
 

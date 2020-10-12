@@ -56,7 +56,6 @@ class MainFragment : Fragment() {
     }
 
     private fun onNext (editName: String) {
-        viewModel.updateName(editName)
         view?.findNavController()?.navigate(
             MainFragmentDirections.actionMainFragmentToMenuFragment(viewModel.player.value!!.getPlayerId())
         )

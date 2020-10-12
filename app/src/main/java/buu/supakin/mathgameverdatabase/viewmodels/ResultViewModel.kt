@@ -1,5 +1,6 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,7 @@ class ResultViewModel (private val database: PlayerDatabaseDao, playerId: Long, 
             initPlayer()
             setResultText()
         }
+
     }
 
     private fun setResultText () {
@@ -60,9 +62,7 @@ class ResultViewModel (private val database: PlayerDatabaseDao, playerId: Long, 
     }
 
     private suspend fun initPlayer () {
-        viewModelScope.launch {
-            val playerTable = getPlayer(playerId)
-            _player.value = playerTable?.let { createPlayer(it) }
-        }
+        val playerTable = getPlayer(playerId)
+        _player.value = playerTable?.let { createPlayer(it) }
     }
 }
