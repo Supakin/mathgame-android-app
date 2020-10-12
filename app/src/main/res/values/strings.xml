@@ -2,6 +2,7 @@
     <string name="app_name">MathGame</string>
     <string name="caption_credit">created by Supakin@xef</string>
     <string name="button_play">กดปุ่มนี้เพื่อเริ่มเล่น</string>
+    <string name="username_topic">ชื่อผู้เล่น</string>
     <string name="caption_menu">เลือกหมวดที่คุณอยากเล่น</string>
     <string name="menu_topic">หมวดหมู่</string>
     <string name="plus">บวก</string>
@@ -38,4 +39,5 @@
     <string name="menu_play">กำลังเล่น</string>
     <string name="menu_result">ผลลัพธ์</string>
     <string name="please_key_name">กรุณากรอกชื่อผู้เล่น</string>
+    <string name="demo_name">demo name</string>
 </resources>
