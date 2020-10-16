@@ -11,3 +11,13 @@ fun createPlayer (playerTable: PlayerTable): Player {
     player.setScoreInCorrect(playerTable.scoreInCorrect)
     return player
 }
+
+fun validatePlayerNameIsEmpty (playerName: String): Boolean {
+    if (playerName == null) return false
+    return true
+}
+
+fun validatePlayerNameIsLong (playerName: String): Boolean {
+    if (playerName.length > 8) return false
+    return true
+}
