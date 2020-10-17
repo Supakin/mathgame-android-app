@@ -1,5 +1,6 @@
 package buu.supakin.mathgameverdatabase.adapter
 
+import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -32,11 +33,12 @@ class RankingAdapter: RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
         private val textName: TextView = itemView.findViewById(R.id.text_name)
         private val textScore: TextView = itemView.findViewById(R.id.text_score)
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: PlayerTable, rank: Int) {
             val res = itemView.context.resources
             textRanking.text = rank.toString()
             textName.text = item.name
-            textScore.text = "${(item.scoreCorrect - item.scoreInCorrect)} คะแนน"
+            textScore.text = "${(item.scoreCorrect - item.scoreInCorrect)} คะแนน (ถูก ${item.scoreCorrect} ผิด ${item.scoreInCorrect})"
 
             if (rank == 1 || rank == 2 || rank == 3) {
                 textRanking.setTextColor(res.getColor(R.color.colorMain))
