@@ -1,6 +1,7 @@
 package buu.supakin.mathgameverdatabase.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,12 +45,14 @@ class RankingFragment : Fragment() {
 
         viewModel.playerList.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Log.i("Ranking", it[0].name)
                 adapter.data = it
             }
         })
 
 
-        return inflater.inflate(R.layout.fragment_ranking, container, false)
+
+        return binding.root
     }
 
 

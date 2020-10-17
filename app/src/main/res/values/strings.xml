@@ -41,4 +41,5 @@
     <string name="please_key_name">กรุณากรอกชื่อผู้เล่น</string>
     <string name="demo_name">demo name</string>
     <string name="menu_ranking">อันดับ</string>
+    <string name="demo_ranking">100</string>
 </resources>
