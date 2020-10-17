@@ -1,6 +1,5 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
 import buu.supakin.mathgameverdatabase.database.PlayerTable
 import buu.supakin.mathgameverdatabase.models.Player
-import buu.supakin.mathgameverdatabase.models.Score
 import kotlinx.coroutines.launch
 
 class MenuViewModel (private val database: PlayerDatabaseDao, playerId: Long) : ViewModel() {

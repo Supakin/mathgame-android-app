@@ -6,6 +6,6 @@
         android:id="@+id/mainFragment"
         android:title="@string/menu_home" />
     <item
-        android:id="@+id/menuFragment"
-        android:title="@string/menu_menu" />
+        android:id="@+id/rankingFragment"
+        android:title="@string/menu_ranking" />
 </menu>
