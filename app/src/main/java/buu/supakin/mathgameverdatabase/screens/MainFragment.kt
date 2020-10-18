@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = PlayerDatabase.getInstance(application).playerDatabaseDao
-        viewModelFactory = MainViewModelFactory(dataSource)
+        viewModelFactory = MainViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext ->

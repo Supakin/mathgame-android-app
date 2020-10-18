@@ -1,9 +1,11 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import buu.supakin.mathgameverdatabase.R
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
 import buu.supakin.mathgameverdatabase.database.PlayerTable
 import buu.supakin.mathgameverdatabase.models.Player
@@ -12,7 +14,7 @@ import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.validatePlayerNameIsEmpty
 import buu.supakin.mathgameverdatabase.validatePlayerNameIsLong
 
-class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
+class MainViewModel(private val database: PlayerDatabaseDao, private val application: Application) : ViewModel() {
     val name = MutableLiveData<String>()
 
     private val _error = MutableLiveData<String>()
@@ -46,10 +48,12 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
                     }
                     _eventNext.value = true
                 } else {
-                    _error.value = "กรุณาระบุชื่อผู้เล่นที่มีความยาวไม่เกิน 8 ตัวอักษร"
+                    //_error.value = "กรุณาระบุชื่อผู้เล่นที่มีความยาวไม่เกิน 8 ตัวอักษร"
+                    _error.value = application.getString(R.string.error_is_long)
                 }
             } else {
-                _error.value = "กรุณาระบุชื่อผู้เล่นอย่างน้อย 1 ตัวอักษร"
+                //_error.value = "กรุณาระบุชื่อผู้เล่นอย่างน้อย 1 ตัวอักษร"
+                _error.value = application.getString(R.string.error_is_empty)
             }
         }
     }
