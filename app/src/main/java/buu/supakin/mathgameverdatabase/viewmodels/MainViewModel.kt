@@ -1,6 +1,5 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,15 +9,19 @@ import buu.supakin.mathgameverdatabase.database.PlayerTable
 import buu.supakin.mathgameverdatabase.models.Player
 import kotlinx.coroutines.launch
 import buu.supakin.mathgameverdatabase.createPlayer
+import buu.supakin.mathgameverdatabase.validatePlayerNameIsEmpty
+import buu.supakin.mathgameverdatabase.validatePlayerNameIsLong
 
 class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
     val name = MutableLiveData<String>()
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
     private val _player = MutableLiveData<Player>()
     val player: LiveData<Player>
         get() = _player
-
-    var playerId: Long = -1
 
     private val _eventNext = MutableLiveData<Boolean>()
     val eventNext: LiveData<Boolean>
@@ -26,19 +29,28 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
 
     init {
         _player.value = Player()
+        _error.value = ""
+        _eventNext.value = false
     }
 
     fun onNext() {
         viewModelScope.launch {
-            if (!hasPlayer()) {
-                var playerTable = PlayerTable()
-                playerTable.name = name.value.toString()
-                insert(playerTable)
-                playerTable = getPlayerByName(name.value.toString())!!
-                Log.i("MainViewModel", playerTable.toString())
-                _player.value = createPlayer(playerTable)
+            if (!validatePlayerNameIsEmpty(name.value)) {
+                if (!validatePlayerNameIsLong(name.value.toString())) {
+                    if (!hasPlayer()) {
+                        var playerTable = PlayerTable()
+                        playerTable.name = name.value.toString()
+                        insert(playerTable)
+                        playerTable = getPlayerByName(name.value.toString())!!
+                        _player.value = createPlayer(playerTable)
+                    }
+                    _eventNext.value = true
+                } else {
+                    _error.value = "กรุณาระบุชื่อผู้เล่นที่มีความยาวไม่เกิน 8 ตัวอักษร"
+                }
+            } else {
+                _error.value = "กรุณาระบุชื่อผู้เล่นอย่างน้อย 1 ตัวอักษร"
             }
-            _eventNext.value = true
         }
     }
 
@@ -56,7 +68,6 @@ class MainViewModel(private val database: PlayerDatabaseDao) : ViewModel() {
 
     private suspend fun hasPlayer(): Boolean {
         val playerTable = getPlayerByName(name.value.toString())
-        Log.i("MainViewModel1", playerTable.toString())
         return if (playerTable != null) {
             _player.value = createPlayer(playerTable)
             true

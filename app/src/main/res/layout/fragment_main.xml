@@ -63,13 +63,13 @@
         <Button
             android:id="@+id/btnPlay"
             style="@style/btnPlay"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="35dp"
             android:onClick="@{()->mainViewModel.onNext()}"
             android:text="@string/button_play"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+            app:layout_constraintTop_toBottomOf="@+id/textError" />
 
         <TextView
             android:id="@+id/caption_credit"
@@ -82,6 +82,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorDanger"
+            android:textStyle="bold"
+            android:text="@{mainViewModel.error}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
