@@ -1,10 +1,12 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import buu.supakin.mathgameverdatabase.R
 import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
 import buu.supakin.mathgameverdatabase.database.PlayerTable
@@ -12,7 +14,11 @@ import buu.supakin.mathgameverdatabase.models.Player
 import buu.supakin.mathgameverdatabase.models.Score
 import kotlinx.coroutines.launch
 
-class ResultViewModel (private val database: PlayerDatabaseDao, playerId: Long, menu: Int = 0, result: Boolean = true): ViewModel() {
+class ResultViewModel (private val database: PlayerDatabaseDao,
+                       private val application: Application,
+                       playerId: Long,
+                       menu: Int = 0,
+                       result: Boolean = true): ViewModel() {
     private val playerId: Long = playerId
     private val _player = MutableLiveData<Player>()
     val player: LiveData<Player>
@@ -45,8 +51,8 @@ class ResultViewModel (private val database: PlayerDatabaseDao, playerId: Long, 
     }
 
     private fun setResultText () {
-        if (_result.value!!) _resultText.value = "${_player.value!!.getScoreCorrect()} ข้อที่ถูกแล้ว"
-        else _resultText.value = "${_player.value!!.getScoreInCorrect()} ข้อที่ผิดแล้ว"
+        if (_result.value!!) _resultText.value = application.getString(R.string.total_correct, _player.value!!.getScoreCorrect())
+        else _resultText.value = application.getString(R.string.total_incorrect, _player.value!!.getScoreInCorrect())
     }
 
     fun onNext () {

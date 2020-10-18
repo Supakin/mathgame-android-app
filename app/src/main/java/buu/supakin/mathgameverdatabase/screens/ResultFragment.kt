@@ -33,6 +33,7 @@ class ResultFragment : Fragment() {
         val dataSource = PlayerDatabase.getInstance(application).playerDatabaseDao
         viewModelFactory = ResultViewModelFactory(
             dataSource,
+            application,
             ResultFragmentArgs.fromBundle(requireArguments()).playerId,
             ResultFragmentArgs.fromBundle(requireArguments()).menu,
             ResultFragmentArgs.fromBundle(requireArguments()).result
