@@ -93,7 +93,7 @@ class PlayViewModel (private val database: PlayerDatabaseDao, playerId: Long, me
 
             override fun onFinish() {
                 _currentTime.value = DONE
-                onClick(question.value!!.randomPositionAnotherAnswer())
+                if (!_eventHide.value!!) onClick(question.value!!.randomPositionAnotherAnswer())
             }
         }
 
@@ -125,12 +125,10 @@ class PlayViewModel (private val database: PlayerDatabaseDao, playerId: Long, me
     }
 
     fun onClick (index: Int) {
-        if (!_eventClick.value!!) {
-            _answer.value = _question.value!!.answerArray[index]
-            _result.value = getResult()
-            onHide()
-            _eventClick.value = true
-        }
+        _answer.value = _question.value!!.answerArray[index]
+        _result.value = getResult()
+        onHide()
+        _eventClick.value = true
     }
 
     fun onClickComplete () {
