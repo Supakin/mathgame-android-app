@@ -1,17 +1,13 @@
 package buu.supakin.mathgameverdatabase.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import buu.supakin.mathgameverdatabase.R
-import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
-import buu.supakin.mathgameverdatabase.database.PlayerTable
-import buu.supakin.mathgameverdatabase.models.Player
-import buu.supakin.mathgameverdatabase.models.Score
+import buu.supakin.mathgameverdatabase.database.Player
 import kotlinx.coroutines.launch
 
 class ResultViewModel (private val database: PlayerDatabaseDao,
@@ -41,10 +37,10 @@ class ResultViewModel (private val database: PlayerDatabaseDao,
         get() = _eventNext
 
     init {
-        _menu.value = menu
-        _result.value = result
         viewModelScope.launch {
-            initPlayer()
+            _menu.value = menu
+            _result.value = result
+            _player.value = getPlayer(playerId)
             setResultText()
         }
 
@@ -63,12 +59,7 @@ class ResultViewModel (private val database: PlayerDatabaseDao,
         _eventNext.value = false
     }
 
-    private suspend fun getPlayer(id: Long): PlayerTable? {
+    private suspend fun getPlayer(id: Long): Player? {
         return database.get(id)
-    }
-
-    private suspend fun initPlayer () {
-        val playerTable = getPlayer(playerId)
-        _player.value = playerTable?.let { createPlayer(it) }
     }
 }

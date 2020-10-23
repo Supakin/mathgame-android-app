@@ -13,7 +13,6 @@ import androidx.navigation.findNavController
 import buu.supakin.mathgameverdatabase.R
 import buu.supakin.mathgameverdatabase.database.PlayerDatabase
 import buu.supakin.mathgameverdatabase.databinding.FragmentPlayBinding
-import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodelfactories.PlayViewModelFactory
 import buu.supakin.mathgameverdatabase.viewmodels.PlayViewModel
 
@@ -39,6 +38,12 @@ class PlayFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(PlayViewModel::class.java)
 
+        viewModel.eventClick.observe(viewLifecycleOwner, Observer { eventClick->
+            if (eventClick) {
+                viewModel.onClickComplete()
+            }
+        })
+
         viewModel.eventNext.observe(viewLifecycleOwner, Observer { eventNext->
             if (eventNext) {
                 onNext()
@@ -59,12 +64,11 @@ class PlayFragment : Fragment() {
     }
 
     private fun onNext () {
-        val result : Boolean  = viewModel!!.getResult()
         view?.findNavController()?.navigate(
             PlayFragmentDirections.actionPlayFragmentToResultFragment(
                 viewModel.player.value!!.getPlayerId(),
                 viewModel.menu.value!!,
-                result
+                viewModel.result.value!!
             )
         )
     }

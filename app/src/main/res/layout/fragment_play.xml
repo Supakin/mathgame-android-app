@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="playViewModel"
             type="buu.supakin.mathgameverdatabase.viewmodels.PlayViewModel" />
@@ -53,7 +54,8 @@
             style="@style/btnAnswer1"
             android:layout_marginStart="40dp"
             android:text="@{playViewModel.question.answerArray[0].toString()}"
-            android:onClick="@{()->playViewModel.onNext(0)}"
+            android:onClick="@{()->playViewModel.onClick(0)}"
+            android:visibility="@{playViewModel.eventHide ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnAnswer2"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -64,7 +66,8 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="@dimen/margin_30dp"
             android:text="@{playViewModel.question.answerArray[1].toString()}"
-            android:onClick="@{()->playViewModel.onNext(1)}"
+            android:onClick="@{()->playViewModel.onClick(1)}"
+            android:visibility="@{playViewModel.eventHide ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/btnAnswer4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtGuideLine" />
@@ -74,7 +77,8 @@
             style="@style/btnAnswer3"
             android:layout_marginStart="40dp"
             android:text="@{playViewModel.question.answerArray[2].toString()}"
-            android:onClick="@{()->playViewModel.onNext(2)}"
+            android:onClick="@{()->playViewModel.onClick(2)}"
+            android:visibility="@{playViewModel.eventHide ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnAnswer4"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -84,7 +88,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="40dp"
             android:text="@{playViewModel.question.answerArray[3].toString()}"
-            android:onClick="@{()->playViewModel.onNext(3)}"
+            android:onClick="@{()->playViewModel.onClick(3)}"
+            android:visibility="@{playViewModel.eventHide ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAnswer1" />
 
@@ -107,6 +112,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="0:00" />
+
+        <TextView
+            android:id="@+id/text_delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:text="@{playViewModel.currentDelayString}"
+            android:visibility="@{!playViewModel.eventHide ? View.INVISIBLE : View.VISIBLE}"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtGuideLine" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

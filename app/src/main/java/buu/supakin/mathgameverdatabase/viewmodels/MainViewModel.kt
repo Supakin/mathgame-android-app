@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import buu.supakin.mathgameverdatabase.R
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
-import buu.supakin.mathgameverdatabase.database.PlayerTable
-import buu.supakin.mathgameverdatabase.models.Player
+import buu.supakin.mathgameverdatabase.database.Player
 import kotlinx.coroutines.launch
-import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.validatePlayerNameIsEmpty
 import buu.supakin.mathgameverdatabase.validatePlayerNameIsLong
 
@@ -40,11 +38,11 @@ class MainViewModel(private val database: PlayerDatabaseDao, private val applica
             if (!validatePlayerNameIsEmpty(name.value)) {
                 if (!validatePlayerNameIsLong(name.value.toString())) {
                     if (!hasPlayer()) {
-                        var playerTable = PlayerTable()
-                        playerTable.name = name.value.toString()
-                        insert(playerTable)
-                        playerTable = getPlayerByName(name.value.toString())!!
-                        _player.value = createPlayer(playerTable)
+                        var newPlayer = Player()
+                        newPlayer.setName(name.value.toString())
+                        insert(newPlayer)
+                        newPlayer = getPlayerByName(name.value.toString())!!
+                        _player.value = newPlayer
                     }
                     _eventNext.value = true
                 } else {
@@ -62,18 +60,18 @@ class MainViewModel(private val database: PlayerDatabaseDao, private val applica
         _eventNext.value = false
     }
 
-    private suspend fun insert(player: PlayerTable) {
+    private suspend fun insert(player: Player) {
         database.insert(player)
     }
 
-    private suspend fun getPlayerByName(name: String): PlayerTable? {
+    private suspend fun getPlayerByName(name: String): Player? {
         return database.getByName(name)
     }
 
     private suspend fun hasPlayer(): Boolean {
-        val playerTable = getPlayerByName(name.value.toString())
-        return if (playerTable != null) {
-            _player.value = createPlayer(playerTable)
+        val player = getPlayerByName(name.value.toString())
+        return if (player != null) {
+            _player.value = player
             true
         } else {
             false

@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import buu.supakin.mathgameverdatabase.createPlayer
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
-import buu.supakin.mathgameverdatabase.database.PlayerTable
-import buu.supakin.mathgameverdatabase.models.Player
+import buu.supakin.mathgameverdatabase.database.Player
 import kotlinx.coroutines.launch
 
 class MenuViewModel (private val database: PlayerDatabaseDao, playerId: Long) : ViewModel() {
@@ -34,7 +32,9 @@ class MenuViewModel (private val database: PlayerDatabaseDao, playerId: Long) : 
         get() = _eventNextToDivideMode
 
     init {
-        initPlayer()
+        viewModelScope.launch {
+            _player.value = getPlayer(playerId)
+        }
     }
 
     fun onNextToPlusMode () {
@@ -69,14 +69,8 @@ class MenuViewModel (private val database: PlayerDatabaseDao, playerId: Long) : 
         _eventNextToDivideMode.value = false
     }
 
-    private suspend fun getPlayer(id: Long): PlayerTable? {
+    private suspend fun getPlayer(id: Long): Player? {
         return database.get(id)
     }
 
-    private fun initPlayer () {
-        viewModelScope.launch {
-            val playerTable = getPlayer(playerId)
-            _player.value = playerTable?.let { createPlayer(it) }
-        }
-    }
 }

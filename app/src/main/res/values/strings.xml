@@ -44,4 +44,5 @@
     <string name="demo_ranking">100</string>
     <string name="error_is_empty">กรุณาระบุชื่อผู้เล่นอย่างน้อย 1 ตัวอักษร</string>
     <string name="error_is_long">กรุณาระบุชื่อผู้เล่นที่มีความยาวไม่เกิน 8 ตัวอักษร</string>
+    <string name="empty_ranking_player">ยังไม่มีผู้เล่น</string>
 </resources>

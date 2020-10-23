@@ -1,23 +1,15 @@
 package buu.supakin.mathgameverdatabase
 
-import android.content.res.Resources
-import android.os.Build
-import android.text.Html
-import android.text.Spanned
-import android.util.Log
-import androidx.core.text.HtmlCompat
-import buu.supakin.mathgameverdatabase.database.PlayerTable
-import buu.supakin.mathgameverdatabase.models.Player
-import java.lang.StringBuilder
 
-fun createPlayer (playerTable: PlayerTable): Player {
-    var  player = Player()
-    player.setPlayerId(playerTable.playerId)
-    player.setName(playerTable.name)
-    player.setScoreCorrect(playerTable.scoreCorrect)
-    player.setScoreInCorrect(playerTable.scoreInCorrect)
-    return player
-}
+//
+//fun createPlayer (player: Player): Player {
+//    var  player = Player()
+//    player.setPlayerId(player.playerId)
+//    player.setName(player.name)
+//    player.setScoreCorrect(player.scoreCorrect)
+//    player.setScoreInCorrect(player.scoreInCorrect)
+//    return player
+//}
 
 fun validatePlayerNameIsEmpty (playerName: String?): Boolean {
     return playerName == null

@@ -45,7 +45,6 @@ class RankingFragment : Fragment() {
 
         viewModel.playerList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.i("Ranking", it[0].name)
                 adapter.data = it
             }
         })

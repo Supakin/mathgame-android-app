@@ -1,15 +1,23 @@
-package buu.supakin.mathgameverdatabase.models
+package buu.supakin.mathgameverdatabase.database
 
-class Player (playerId: Long = -1,
-              name: String = "",
-              scoreCorrect: Int = 0,
-              scoreInCorrect: Int = 0) {
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    private var playerId: Long = playerId
-    private var name: String = name
-    private var scoreCorrect: Int = scoreCorrect
-    private var scoreInCorrect: Int = scoreInCorrect
+@Entity(tableName = "player_table")
+data class Player (
+    @PrimaryKey(autoGenerate = true)
+    private var playerId: Long = 0L,
 
+    @ColumnInfo(name = "name")
+    private var name: String = "",
+
+    @ColumnInfo(name = "score_correct")
+    private var scoreCorrect: Int = 0,
+
+    @ColumnInfo(name = "score_incorrect")
+    private var scoreInCorrect: Int = 0
+) {
     fun setPlayerId (id: Long) {
         this.playerId = id
     }
@@ -42,3 +50,4 @@ class Player (playerId: Long = -1,
         this.scoreInCorrect++
     }
 }
+

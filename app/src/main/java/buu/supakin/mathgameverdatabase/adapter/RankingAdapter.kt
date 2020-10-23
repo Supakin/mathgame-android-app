@@ -1,6 +1,7 @@
 package buu.supakin.mathgameverdatabase.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import buu.supakin.mathgameverdatabase.R
-import buu.supakin.mathgameverdatabase.database.PlayerTable
+import buu.supakin.mathgameverdatabase.database.Player
 
-class RankingAdapter: RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
-    var data = listOf<PlayerTable>()
+class RankingAdapter : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
+    var data = listOf<Player>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,17 +29,18 @@ class RankingAdapter: RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textRanking: TextView = itemView.findViewById(R.id.text_ranking)
         private val textName: TextView = itemView.findViewById(R.id.text_name)
-        private val textScore: TextView = itemView.findViewById(R.id.text_score)
+        private val textScore: TextView = itemView.findViewById(R.id.text_empty)
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: PlayerTable, rank: Int) {
+        fun bind(item: Player, rank: Int) {
             val res = itemView.context.resources
             textRanking.text = rank.toString()
-            textName.text = item.name
-            textScore.text = "${(item.scoreCorrect - item.scoreInCorrect)} คะแนน (ถูก ${item.scoreCorrect} ผิด ${item.scoreInCorrect})"
+            textName.text = item.getName()
+            textScore.text =
+                "${(item.getScoreCorrect() - item.getScoreInCorrect())} คะแนน (ถูก ${item.getScoreCorrect()} ผิด ${item.getScoreInCorrect()})"
 
             if (rank == 1 || rank == 2 || rank == 3) {
                 textRanking.setTextColor(res.getColor(R.color.colorMain))
@@ -51,7 +53,7 @@ class RankingAdapter: RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.list_ranking_player,parent, false)
+                val view = layoutInflater.inflate(R.layout.list_ranking_player, parent, false)
                 return ViewHolder(view)
             }
         }

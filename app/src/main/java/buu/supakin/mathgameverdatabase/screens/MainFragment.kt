@@ -13,7 +13,6 @@ import androidx.navigation.findNavController
 import buu.supakin.mathgameverdatabase.R
 import buu.supakin.mathgameverdatabase.database.PlayerDatabase
 import buu.supakin.mathgameverdatabase.databinding.FragmentMainBinding
-import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodelfactories.MainViewModelFactory
 import buu.supakin.mathgameverdatabase.viewmodels.MainViewModel
 import kotlin.system.exitProcess
