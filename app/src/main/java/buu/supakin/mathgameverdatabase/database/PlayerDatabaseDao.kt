@@ -20,7 +20,7 @@ interface PlayerDatabaseDao {
     @Query("SELECT * from player_table WHERE name = :name")
     suspend fun getByName(name: String): Player?
 
-    @Query("SELECT * from player_table ORDER BY score_correct DESC, score_incorrect ASC")
+    @Query("SELECT * from player_table ORDER BY (score_correct - score_incorrect) DESC")
     fun  getAllPlayerDesc(): LiveData<List<Player>>
 
     @Query("DELETE from player_table WHERE playerId = :key")

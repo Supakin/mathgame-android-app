@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
-import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodels.MainViewModel
 import java.lang.IllegalArgumentException
 

@@ -3,7 +3,6 @@ package buu.supakin.mathgameverdatabase.viewmodelfactories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import buu.supakin.mathgameverdatabase.database.PlayerDatabaseDao
-import buu.supakin.mathgameverdatabase.models.Score
 import buu.supakin.mathgameverdatabase.viewmodels.MenuViewModel
 import java.lang.IllegalArgumentException
 
