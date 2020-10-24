@@ -39,8 +39,7 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
             val res = itemView.context.resources
             textRanking.text = rank.toString()
             textName.text = item.getName()
-            textScore.text =
-                "${(item.getScoreCorrect() - item.getScoreInCorrect())} คะแนน (ถูก ${item.getScoreCorrect()} ผิด ${item.getScoreInCorrect()})"
+            textScore.text = res.getString(R.string.ranking_score, item.getScoreCorrect() - item.getScoreInCorrect(), item.getScoreCorrect(), item.getScoreInCorrect())
 
             if (rank == 1 || rank == 2 || rank == 3) {
                 textRanking.setTextColor(res.getColor(R.color.colorMain))

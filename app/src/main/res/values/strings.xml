@@ -45,4 +45,5 @@
     <string name="error_is_empty">กรุณาระบุชื่อผู้เล่นอย่างน้อย 1 ตัวอักษร</string>
     <string name="error_is_long">กรุณาระบุชื่อผู้เล่นที่มีความยาวไม่เกิน 8 ตัวอักษร</string>
     <string name="empty_ranking_player">ยังไม่มีผู้เล่น</string>
+    <string name="ranking_score">%d คะแนน (ตอบถูก %d ข้อ, ตอบผิด %d ข้อ)</string>
 </resources>
